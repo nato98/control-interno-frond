@@ -19,7 +19,6 @@ module.exports = {
     '<rootDir>/libs/shared/components/contenedor-dashboard',
     '<rootDir>/libs/modules/usuarios/feature-historial-ingresos',
     '<rootDir>/libs/modules/usuarios/feature-gestionar-responsables',
-    '<rootDir>/libs/shared/components/file-upload',
     '<rootDir>/libs/modules/hallazgos/feature-shell',
     '<rootDir>/libs/modules/hallazgos/data-access',
     '<rootDir>/libs/modules/hallazgos/feature-hallazgos',

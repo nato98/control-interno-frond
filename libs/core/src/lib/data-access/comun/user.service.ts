@@ -66,6 +66,8 @@ export class UserService {
             return throwError(e);
           }
           const separacion = e.error.mensajeDuplicacion.split('\'');
+          console.log(separacion);
+
           console.error(e.error.mensaje);
           swal.fire(
             e.error.mensaje,

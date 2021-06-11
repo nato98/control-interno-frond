@@ -23,7 +23,6 @@ import {
   ObservacionesService,
   Observacion,
   ResumenPlan,
-  ResumenCausa,
 } from '@unicauca/modules/plan-mejoramiento/data-access';
 import {
   Columna,
@@ -31,7 +30,6 @@ import {
   TipoColumna,
 } from '@unicauca/shared/components/tabla';
 import { BehaviorSubject } from 'rxjs';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { debounceTime, timestamp } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ObservacionesComponent } from '../observaciones/observaciones.component';
@@ -83,6 +81,8 @@ export class ChecklistDatabase {
     this.servicioPlan
       .getResumenPlan(this.codeUrl)
       .subscribe((res: ResumenPlan[]) => {
+        console.log(res);
+
         const respuesta = this.arreglarResumenPlan(res);
         const data = this.buildFileTree(respuesta, 0);
         this.dataChange.next(data);
@@ -109,6 +109,8 @@ export class ChecklistDatabase {
             : obj
         ),
     }));
+    console.log(lis);
+
     return lis
   }
 
@@ -124,6 +126,7 @@ export class ChecklistDatabase {
       .map(obj => this.getNombreKeyObjeto2(obj) !== undefined ? obj[this.getNombreKeyObjeto2(obj)] : obj )
     })
     )
+    console.log('fn: ', listaIDs);
 
     return listaIDs.map(id => ({
       ...objs[id],
@@ -188,6 +191,7 @@ export class ChecklistDatabase {
           [el.id_CAUSA]: el
         }), {})
         }))
+        console.log('listaCausas', listaCausas);
     // const listaHallazgos = this.fn(resumenBack);
     // const listaCausas1 = listaHallazgos.map(obj => ({...obj, causa: this.fn(obj.causa)}))
     // const listaCausar = listaCausas1.map(obj => (console.log('lis: ',this.fn(obj.causa))))

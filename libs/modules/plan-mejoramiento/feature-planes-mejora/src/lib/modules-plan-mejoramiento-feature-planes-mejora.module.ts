@@ -26,7 +26,6 @@ import { SharedPipesModule } from '@unicauca/shared/pipes';
 import { SharedComponentsTabsModule } from '@unicauca/shared/components/tabs';
 import { SharedComponentsTablaModule } from '@unicauca/shared/components/tabla';
 import { SharedComponentsTablaLideresModule } from '@unicauca/shared/components/tabla-lideres';
-import { SharedComponentsFileUploadModule } from '@unicauca/shared/components/file-upload';
 import { SharedComponentsContenedorDashboardModule } from '@unicauca/shared/components/contenedor-dashboard';
 
 import { AuthModule } from '@unicauca/auth';
@@ -166,7 +165,6 @@ const routes: Routes = [
     SharedPipesModule,
     SharedComponentsTabsModule,
     SharedComponentsTablaModule,
-    SharedComponentsFileUploadModule,
     ModulesCausasFeatureCausasModule,
     SharedComponentsTablaLideresModule,
     ModulesAccionesFeatureAccionesModule,

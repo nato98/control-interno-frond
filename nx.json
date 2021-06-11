@@ -46,7 +46,6 @@
     "shared-components-contenedor-dashboard": { "tags": [] },
     "modules-usuarios-feature-historial-ingresos": { "tags": [] },
     "modules-usuarios-feature-gestionar-responsables": { "tags": [] },
-    "shared-components-file-upload": { "tags": [] },
     "modules-hallazgos-feature-shell": { "tags": [] },
     "modules-hallazgos-data-access": { "tags": [] },
     "modules-hallazgos-feature-hallazgos": { "tags": [] },

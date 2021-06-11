@@ -54,9 +54,6 @@
       "@unicauca/modules/usuarios/feature-gestionar-responsables": [
         "libs/modules/usuarios/feature-gestionar-responsables/src/index.ts"
       ],
-      "@unicauca/shared/components/file-upload": [
-        "libs/shared/components/file-upload/src/index.ts"
-      ],
       "@unicauca/modules/hallazgos/feature-shell": [
         "libs/modules/hallazgos/feature-shell/src/index.ts"
       ],

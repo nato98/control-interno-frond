@@ -39,7 +39,7 @@ export class AgregarComponent implements OnInit {
   public tituloBoton = '';
 
   tituloCargarArchivos = 'Seleccione un archivo';
-  nombreArchivo = 'documento de inicio o soporte del plan';
+  // nombreArchivo = 'documento de inicio o soporte del plan';
 
   public auditores: Person[] = [];
   public lideresProceso: Person[] = [];
@@ -147,6 +147,8 @@ export class AgregarComponent implements OnInit {
         )
       )
       .subscribe((res) => {
+        console.log(res);
+
         this.dataSourceLiderProceso = new MatTableDataSource<any>(res);
         this.streamDatosLiderProceso$.next(res);
 
@@ -378,9 +380,9 @@ export class AgregarComponent implements OnInit {
     return fecha1 && fecha2 ? fecha1 > fecha2 : false;
   }
 
-  onFileComplete(data: any) {
-    this.nombreArchivo = data.name;
-  }
+  // onFileComplete(data: any) {
+  //   this.nombreArchivo = data.name;
+  // }
 
   onAplicarFiltroItemsLiderProceso(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

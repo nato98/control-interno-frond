@@ -582,31 +582,6 @@
         }
       }
     },
-    "shared-components-file-upload": {
-      "projectType": "library",
-      "root": "libs/shared/components/file-upload",
-      "sourceRoot": "libs/shared/components/file-upload/src",
-      "prefix": "unicauca",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/shared/components/file-upload/src/**/*.ts",
-              "libs/shared/components/file-upload/src/**/*.html"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/shared/components/file-upload"],
-          "options": {
-            "jestConfig": "libs/shared/components/file-upload/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "modules-hallazgos-feature-shell": {
       "projectType": "library",
       "root": "libs/modules/hallazgos/feature-shell",
