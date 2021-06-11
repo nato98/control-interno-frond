@@ -1,0 +1,175 @@
+import { takeUntil, map, tap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { Causa } from '@unicauca/modules/plan-mejoramiento/data-access';
+
+import {
+  EstadoButtons,
+  Columna,
+  TipoColumna,
+} from '@unicauca/shared/components/tabla';
+import { EstadosComunService } from '@unicauca/core';
+import { CausaService } from '@unicauca/modules/causas/data-access';
+import { Hallazgo } from '@unicauca/modules/plan-mejoramiento/data-access';
+
+@Component({
+  selector: 'unicauca-historial-causas',
+  templateUrl: './historial-causas.component.html',
+  styleUrls: ['./historial-causas.component.scss'],
+})
+export class HistorialCausasComponent implements OnInit {
+  nombrePlan = '';
+  nombreHallazgo = '';
+  titulo = '';
+  activarFiltroItems = true;
+  unsubscribe$ = new Subject();
+
+  hallazgo: Hallazgo;
+  causas: Causa[]= []
+
+  estadoButtons: EstadoButtons = {
+    crear: true,
+    editar: true,
+    eliminar: true,
+    upload: false,
+    visualizar: true,
+  };
+
+  columnas: Columna[] = [
+    { nombreCelda: 'posicion', nombreCeldaHeader: 'Posición' },
+    { nombreCelda: 'causa', nombreCeldaHeader: 'Descripción' },
+    {
+      nombreCelda: 'acciones',
+      nombreCeldaHeader: 'Acciones',
+      tipo: TipoColumna.ACCIONES,
+    },
+  ];
+
+  streamDatos$ = new BehaviorSubject<any[]>([]);
+
+  constructor(
+    private router: Router,
+    private causaService: CausaService,
+    private estadosComunService: EstadosComunService,
+  ) {}
+
+  ngOnInit(): void {
+    this.estadosComunService.customHallazgo
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((msg) => (this.hallazgo = msg));
+    this.estadosComunService.customSelectedIndex
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe();
+    this.listarCausas();
+  }
+
+  private listarCausas(): void {
+    if (this.hallazgo !== null) {
+      this.nombrePlan = this.hallazgo.objPlan.nombre;
+      this.nombreHallazgo = this.hallazgo.hallazgo;
+      this.causaService
+        .getCausaPorIdHallazgo(this.hallazgo.id_hallazgo)
+        .pipe(
+          takeUntil(this.unsubscribe$),
+          tap((res)=> this.causas = res),
+          map((listadoCausas: any[]) =>
+            listadoCausas.map((causa, index) => ({
+              id: causa.id_causa,
+              posicion: index + 1,
+              causa: causa.causa,
+              objHallazgo: causa.objHallazgo,
+            }))
+          )
+        )
+        .subscribe(
+          (datosCausa) => {
+            this.streamDatos$.next(datosCausa);
+          },
+          () => {
+            this.streamDatos$.next([]);
+          }
+        );
+    }
+  }
+
+  public agregar(): void {
+    if (this.hallazgo !== null) {
+      this.router.navigate([
+        '/home/planes-mejora/historial/causas/gestionCausa',
+        this.hallazgo.id_hallazgo,
+      ])
+      this.estadosComunService.changeSelectedIndex(2);
+    }
+  }
+  public onDeleteCausa($causa): void {
+    Swal.fire({
+      title: `¿Deseas eliminar la causa ${$causa.posicion}?`,
+      text: 'Los datos serán eliminados permanentemente',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.causaService
+          .deleteCausa($causa.id)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(
+            (respuestaBack) => {
+              this.listarCausas();
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: `${respuestaBack.mensaje}`,
+                showConfirmButton: true
+              });
+            },
+            (error) => {
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: `${error.error.mensaje}`,
+                showConfirmButton: true
+              });
+            }
+          );
+      }
+    });
+  }
+  public onEditarCausa($causa): void {
+    if (this.hallazgo !== null) {
+      this.router.navigate([
+        '/home/planes-mejora/historial/causas/gestionCausa',
+        this.hallazgo.id_hallazgo, $causa.id
+      ]);
+      localStorage.setItem('visualizar', 'false');
+      this.estadosComunService.changeSelectedIndex(2);
+    }
+  }
+  public onVisualizarCausa($causa): void {
+    if (this.hallazgo !== null) {
+      this.router.navigate([
+        '/home/planes-mejora/historial/causas/gestionCausa',
+        this.hallazgo.id_hallazgo, $causa.id
+      ]);
+      localStorage.setItem('visualizar', 'true');
+      this.estadosComunService.changeSelectedIndex(2);
+    }
+  }
+  public onCrearAccion($causa): void {
+    if (this.hallazgo !== null) {
+      const causaAAgregarAccion: Causa[] = this.causas.filter(
+        (causa) => causa.id_causa === $causa.id
+      );
+      this.estadosComunService.changeCausa(causaAAgregarAccion[0]);
+      this.router.navigate([
+        '/home/planes-mejora/historial/acciones'
+      ])
+      this.estadosComunService.changeSelectedIndex(3);
+    }
+  }
+}
