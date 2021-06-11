@@ -76,6 +76,7 @@ export function crearItemsMenuPorTipoUsuario(
         },
       ],
     },
+
     {
       tipoUsuario: TipoUsuario.RESPONSABLE,
       itemsMenu: [
