@@ -41,7 +41,7 @@ export function crearItemsMenuPorTipoUsuario(
           icon: 'library_books',
           nombre: 'Plan de mejoramiento',
         },
-        { ruta: '/admin/home', icon: 'bar_chart', nombre: 'Estadísticas' },
+        // { ruta: '/admin/home', icon: 'bar_chart', nombre: 'Estadísticas' },
       ],
     },
     {
