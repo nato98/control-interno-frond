@@ -1,5 +1,6 @@
+import { FileUploadModel } from './Model/fileUploadedModel';
 import { MatInputModule } from '@angular/material/input';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -39,4 +40,12 @@ import { MatDialogModule } from '@angular/material/dialog';
   declarations: [FileUploadComponent],
   exports: [FileUploadComponent],
 })
-export class SharedComponentsFileUploadModule {}
+export class SharedComponentsFileUploadModule {
+  static forChild(): ModuleWithProviders<SharedComponentsFileUploadModule> {
+    return {
+      ngModule: SharedComponentsFileUploadModule,
+      providers: [FileUploadModel],
+    };
+  }
+}
+

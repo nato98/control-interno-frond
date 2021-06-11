@@ -61,8 +61,6 @@ export class SeguimientoAuditorComponent implements OnInit {
     this.correo = this.authService.getUsuario().objPerson.email;
     this.rol = this.authService.getUsuario().objRole[0];
     new Promise((res, rej) => {
-      console.log(this.authService.getUsuario().objPerson.id);
-
       const idAuditor = this.authService.getUsuario().objPerson.id;
       res(idAuditor);
     }).then((idAuditor: string) => {

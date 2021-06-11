@@ -68,9 +68,6 @@ export class HistorialComponent implements OnInit {
             (usuario) => usuario.objRole.roleName !== 'ROLE_responsable'
           )
         ),
-        tap((usuarios: any[]) =>
-          console.log(usuarios)
-        ),
         map((usuarios: any[]) =>
           usuarios.map((usuario, index) => ({
             id: usuario.id,

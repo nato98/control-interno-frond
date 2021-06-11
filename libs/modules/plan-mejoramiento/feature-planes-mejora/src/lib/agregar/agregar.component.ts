@@ -147,8 +147,6 @@ export class AgregarComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        console.log(res);
-
         this.dataSourceLiderProceso = new MatTableDataSource<any>(res);
         this.streamDatosLiderProceso$.next(res);
 
