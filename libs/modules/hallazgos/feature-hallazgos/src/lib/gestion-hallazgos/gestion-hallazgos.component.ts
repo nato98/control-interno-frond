@@ -105,6 +105,7 @@ export class GestionHallazgosComponent implements OnInit {
   public onEditar(): void {
     if (this.formularioHallazgo.invalid) {
       return;
+
     }
     this.hallazgoService
       .editarHallazgo(this.formularioHallazgo.value, this.id_hallazgo.value)
