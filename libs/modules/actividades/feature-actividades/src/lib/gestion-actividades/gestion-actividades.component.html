@@ -40,7 +40,7 @@
                                 </mat-select>
                             </mat-form-field>
                             <!-- Unidad -->
-                            <div fxLayout="row" fxLayoutGap="20px">
+                            <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
                                 <mat-label fxFlex="20%">Unidad</mat-label>
                                 <mat-radio-group fxFlex="60%" fxLayoutGap="20px" id="tipo_unidad" formControlName="tipo_unidad" aria-label="tipo_unidad">
                                     <mat-radio-button *ngFor="let options of listaCheck" [value]="options.value">
@@ -128,7 +128,7 @@
                         </div>
                         <!-- Botón de guardar -->
                         <div fxFlex="20%" fxLayoutAlign="center center">
-                            <div fxLayout="row" fxLayoutGap="30px" fxLayoutAlign="center center" *ngIf="!mostrarBtnVolver">
+                            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px" fxLayoutAlign="center center" *ngIf="!mostrarBtnVolver">
                                 <button mat-raised-button type="submit" color="primary">
                               {{ nombreBoton }}
                             </button>
