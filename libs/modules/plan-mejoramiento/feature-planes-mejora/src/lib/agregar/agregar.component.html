@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                                 <!-- Datos de los auditores y líderes de proceso -->
-                                <div fxLayout="row" fxLayoutGap="30px">
+                                <div fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column" fxLayoutGap="30px">
                                     <!-- Tabla líder proceso -->
                                     <div fxFlex="1 1 calc(50% - 20px)">
                                         <unicauca-tabla-lider [inTituloTabla]="'Asignar líder de proceso'" [inLider]="'Líder de proceso'" [inColumnas]="columnas" [inStreamDatos$]="streamDatosLiderProceso$" [inActivarFiltroItems]="'true'" [inPlaceholderFiltroItems]="'Filtrar líder de proceso'"
