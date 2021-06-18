@@ -69,8 +69,17 @@ const routes: Routes = [
       {
         path: 'seguimiento-plan-mejora',
         loadChildren: () =>
-          import('@unicauca/modules/seguimiento-plan-mejora/feature-shell').then(
+          import(
+            '@unicauca/modules/seguimiento-plan-mejora/feature-shell'
+          ).then(
             (module) => module.ModulesSeguimientoPlanMejoraFeatureShellModule
+          ),
+      },
+      {
+        path: 'gestion-plan-responsable',
+        loadChildren: () =>
+          import('@unicauca/modules/gestion-plan-responsable/feature-shell').then(
+            (module) => module.ModulesGestionPlanResponsableFeatureShellModule
           ),
       },
     ],

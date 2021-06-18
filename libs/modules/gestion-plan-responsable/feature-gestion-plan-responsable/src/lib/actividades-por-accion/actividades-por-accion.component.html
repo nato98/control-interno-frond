@@ -1,0 +1,36 @@
+<div fxLayout="column" fxLayoutGap="20px">
+    <!-- Datos del plan -->
+    <div fxLayout="column">
+        <!-- Nombre plan -->
+        <div fxLayout="row" fxLayoutGap="20px">
+            <h4>Plan de mejora: </h4>
+            <p>{{nombrePlan}}</p>
+        </div>
+        <!-- Fecha fin del plan -->
+        <div fxLayout="row" fxLayoutGap="20px">
+            <h4>Fecha de finalización del plan de mejora: </h4>
+            <p>{{fechaFinPlan | date: 'mediumDate'}}</p>
+        </div>
+    </div>
+    <!-- Las actividades -->
+    <div fxLayout="row">
+        <!-- Lista de actividades -->
+        <div fxFlex="30%" fxLayoutAlign="center center" class="bordes">
+            <mat-radio-group class="margen" fxLayout="column" fxLayoutGap="30px" [(ngModel)]="actividadSeleccionada" (ngModelChange)="onChangeActividad()">
+                <mat-radio-button *ngFor="let actividad of listaActividades" [value]="actividad">
+                    {{actividad.indicador}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <!-- Ventana de evidencias por actividad -->
+        <div fxFlex="70%" fxLayout="column" fxLayoutGap="20px" class="bordes padding">
+            <div>
+                <unicauca-tabla [inTituloTabla]="titulo" [inColumnas]="columnas" [inStreamDatos$]="streamDatos$" [inActivarFiltroItems]="activarFiltroItems" inPlaceholderFiltroItems="Filtrar">
+                </unicauca-tabla>
+            </div>
+            <div fxLayoutAlign="end end">
+                <button mat-raised-button color="primary">Evidencia</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -104,6 +104,15 @@
       ],
       "@unicauca/shared/components/spinner": [
         "libs/shared/components/spinner/src/index.ts"
+      ],
+      "@unicauca/modules/gestion-plan-responsable/feature-shell": [
+        "libs/modules/gestion-plan-responsable/feature-shell/src/index.ts"
+      ],
+      "@unicauca/modules/gestion-plan-responsable/data-access": [
+        "libs/modules/gestion-plan-responsable/data-access/src/index.ts"
+      ],
+      "@unicauca/modules/gestion-plan-responsable/feature-gestion-plan-responsable": [
+        "libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable/src/index.ts"
       ]
     }
   },
