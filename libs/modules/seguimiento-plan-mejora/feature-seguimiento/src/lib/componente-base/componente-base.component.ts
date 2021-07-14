@@ -17,5 +17,4 @@ export class ComponenteBaseComponent implements OnInit {
     this.correo = this.authService.getUsuario().objPerson.email;
     this.rol = this.authService.getUsuario().objRole[0];
   }
-
 }

@@ -1,3 +1,5 @@
+import { ModulesSeguimientoPlanMejoraDataAccessModule } from './../../../../seguimiento-plan-mejora/data-access/src/lib/modules-seguimiento-plan-mejora-data-access.module';
+import { ContainerComponent } from './../../../../../shared/components/tabs/src/lib/container/container.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -14,12 +16,15 @@ import { ModulesGestionPlanResponsableDataAccessModule } from './../../../data-a
 
 import { SharedPipesModule } from '@unicauca/shared/pipes';
 import { SharedComponentsTablaModule } from '@unicauca/shared/components/tabla';
+import { SharedComponentsDialogoSimpleModule } from '@unicauca/shared/components/dialogo-simple';
 import { SharedComponentsContenedorDashboardModule } from '@unicauca/shared/components/contenedor-dashboard';
-import { ContainerComponent } from './../../../../../shared/components/tabs/src/lib/container/container.component';
 
 import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { SubirEvidenciaComponent } from './subir-evidencia/subir-evidencia.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 
 const routes: Routes = [
   {
@@ -35,7 +40,7 @@ const routes: Routes = [
             component: TableroResponsableComponent,
           },
           {
-            path: 'actividades/:idAccion/:nombrePlan/:fechaFin',
+            path: 'actividades/:idAccion/:nombrePlan/:fechaFin/:tipoAccion',
             component: ActividadesPorAccionComponent,
           },
         ],
@@ -54,18 +59,22 @@ const routes: Routes = [
     FlexLayoutModule,
 
     MatRadioModule,
+    MatInputModule,
     MatButtonModule,
+    MatDialogModule,
     MatSidenavModule,
 
     SharedPipesModule,
     SharedComponentsTablaModule,
     SharedComponentsContenedorDashboardModule,
+    SharedComponentsDialogoSimpleModule,
 
     ModulesActividadesDataAccessModule.forChild(),
+    ModulesSeguimientoPlanMejoraDataAccessModule.forChild(),
     ModulesGestionPlanResponsableDataAccessModule.forChild(),
 
     RouterModule.forChild(routes),
   ],
-  declarations: [TableroResponsableComponent, ComponenteBaseComponent, ActividadesPorAccionComponent],
+  declarations: [TableroResponsableComponent, ComponenteBaseComponent, ActividadesPorAccionComponent, SubirEvidenciaComponent],
 })
 export class ModulesGestionPlanResponsableFeatureGestionPlanResponsableModule {}

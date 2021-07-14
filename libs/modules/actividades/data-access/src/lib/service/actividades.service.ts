@@ -27,4 +27,13 @@ export class ActividadesService {
   public editarActividad(actividad: Actividad, idActividad: number): Observable<any>{
     return this.http.put(this.urlEndPoint+`actividades/${idActividad}`, actividad);
   }
+  public getActividadesPorIdPlan(idPlan: string): Observable<any>{
+    const options = {
+      headers: {
+        'code-url': idPlan,
+        'Content-Type': 'application/json',
+      },
+    };
+    return this.http.get<any>(`${this.urlEndPoint}getActividadesPorIdPlan`, options);
+  }
 }

@@ -1,15 +1,25 @@
 <div fxLayout="column" fxLayoutGap="20px">
-    <!-- Datos del plan -->
-    <div fxLayout="column">
-        <!-- Nombre plan -->
-        <div fxLayout="row" fxLayoutGap="20px">
-            <h4>Plan de mejora: </h4>
-            <p>{{nombrePlan}}</p>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <!-- Datos del plan -->
+        <div fxLayout="column">
+            <!-- Nombre plan -->
+            <div fxLayout="row" fxLayoutGap="20px">
+                <h4>Plan de mejora: </h4>
+                <p>{{nombrePlan}}</p>
+            </div>
+            <!-- Fecha fin del plan -->
+            <div fxLayout="row" fxLayoutGap="20px">
+                <h4>Fecha de finalización del plan de mejora: </h4>
+                <p>{{fechaFinPlan | date: 'mediumDate'}}</p>
+            </div>
+            <!-- Tipo acción -->
+            <div fxLayout="row" fxLayoutGap="20px">
+                <h4>Descripción de la acción: </h4>
+                <p>{{tipoAccion}}</p>
+            </div>
         </div>
-        <!-- Fecha fin del plan -->
-        <div fxLayout="row" fxLayoutGap="20px">
-            <h4>Fecha de finalización del plan de mejora: </h4>
-            <p>{{fechaFinPlan | date: 'mediumDate'}}</p>
+        <div>
+            <button mat-raised-button color="warn" (click)="volverAlTablerResponsable()">Volver</button>
         </div>
     </div>
     <!-- Las actividades -->
@@ -29,7 +39,7 @@
                 </unicauca-tabla>
             </div>
             <div fxLayoutAlign="end end">
-                <button mat-raised-button color="primary">Evidencia</button>
+                <button mat-raised-button color="primary" (click)="subirEvidencia()">Evidencia</button>
             </div>
         </div>
     </div>

@@ -71,7 +71,7 @@ export class TableroResponsableComponent implements OnInit {
 
   public outAdjuntarEvidencia($event): void{
     this.router.navigate(['/home/gestion-plan-responsable/gestion-plan-responsable/actividades',
-    $event.idAccion, $event.nombrePlan, $event.fechaLimite]);
+    $event.idAccion, $event.nombrePlan, $event.fechaLimite, $event.tipoAccion]);
   }
 
 }

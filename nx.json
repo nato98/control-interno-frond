@@ -67,6 +67,7 @@
     "modules-gestion-plan-responsable-data-access": { "tags": [] },
     "modules-gestion-plan-responsable-feature-gestion-plan-responsable": {
       "tags": []
-    }
+    },
+    "shared-components-dialogo-simple": { "tags": [] }
   }
 }

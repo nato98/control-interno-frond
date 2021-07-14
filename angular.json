@@ -1093,6 +1093,31 @@
           }
         }
       }
+    },
+    "shared-components-dialogo-simple": {
+      "projectType": "library",
+      "root": "libs/shared/components/dialogo-simple",
+      "sourceRoot": "libs/shared/components/dialogo-simple/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/components/dialogo-simple/src/**/*.ts",
+              "libs/shared/components/dialogo-simple/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/components/dialogo-simple"],
+          "options": {
+            "jestConfig": "libs/shared/components/dialogo-simple/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

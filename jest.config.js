@@ -39,5 +39,6 @@ module.exports = {
     '<rootDir>/libs/modules/gestion-plan-responsable/feature-shell',
     '<rootDir>/libs/modules/gestion-plan-responsable/data-access',
     '<rootDir>/libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable',
+    '<rootDir>/libs/shared/components/dialogo-simple',
   ],
 };
