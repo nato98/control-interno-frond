@@ -22,25 +22,38 @@
             <button mat-raised-button color="warn" (click)="volverAlTablerResponsable()">Volver</button>
         </div>
     </div>
+
     <!-- Las actividades -->
-    <div fxLayout="row">
-        <!-- Lista de actividades -->
-        <div fxFlex="30%" fxLayoutAlign="center center" class="bordes">
-            <mat-radio-group class="margen" fxLayout="column" fxLayoutGap="30px" [(ngModel)]="actividadSeleccionada" (ngModelChange)="onChangeActividad()">
-                <mat-radio-button *ngFor="let actividad of listaActividades" [value]="actividad">
-                    {{actividad.indicador}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <!-- Ventana de evidencias por actividad -->
-        <div fxFlex="70%" fxLayout="column" fxLayoutGap="20px" class="bordes padding">
-            <div>
-                <unicauca-tabla [inTituloTabla]="titulo" [inColumnas]="columnas" [inStreamDatos$]="streamDatos$" [inActivarFiltroItems]="activarFiltroItems" inPlaceholderFiltroItems="Filtrar">
-                </unicauca-tabla>
-            </div>
-            <div fxLayoutAlign="end end">
-                <button mat-raised-button color="primary" (click)="subirEvidencia()">Evidencia</button>
-            </div>
-        </div>
+    <div>
+        <mat-sidenav-container class="example-container">
+            <mat-sidenav #sidenav mode="side" [opened]="opened" class="example-sidenav">
+                <mat-list>
+                    <mat-list-item>
+                        <h4>Actividades</h4>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <!-- <mat-list-item></mat-list-item> -->
+                    <mat-radio-group class="margen" fxLayout="column" fxLayoutGap="30px" [(ngModel)]="actividadSeleccionada" (ngModelChange)="onChangeActividad()">
+                        <mat-list-item *ngFor="let actividad of listaActividades">
+                            <mat-radio-button [value]="actividad">
+                                {{actividad.indicador}}
+                            </mat-radio-button>
+                        </mat-list-item>
+                    </mat-radio-group>
+                    <mat-divider></mat-divider>
+                </mat-list>
+            </mat-sidenav>
+
+            <mat-sidenav-content>
+                <div fxLayoutAlign="end end"><button mat-raised-button color="primary" type="button" (click)="click()">{{opened ? 'Extraer' : 'Abrir'}} actividades</button></div>
+                <p>
+                    <unicauca-tabla [inTituloTabla]="titulo" [inColumnas]="columnas" [inStreamDatos$]="streamDatos$" [inActivarFiltroItems]="activarFiltroItems" inPlaceholderFiltroItems="Filtrar">
+                    </unicauca-tabla>
+                </p>
+                <div fxLayoutAlign="end end">
+                    <button mat-raised-button color="primary" (click)="subirEvidencia()">Evidencia</button>
+                </div>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
     </div>
 </div>

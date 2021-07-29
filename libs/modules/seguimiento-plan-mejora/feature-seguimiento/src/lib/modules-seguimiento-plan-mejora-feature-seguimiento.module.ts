@@ -22,7 +22,7 @@ import { ComponenteBaseComponent } from './componente-base/componente-base.compo
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ModulesActividadesDataAccessModule } from '@unicauca/modules/actividades/data-access';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EvaluarEvidenciaComponent } from './evaluar-evidencia/evaluar-evidencia.component';
 
 const routes: Routes = [
@@ -51,6 +51,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
 
     LayoutModule,

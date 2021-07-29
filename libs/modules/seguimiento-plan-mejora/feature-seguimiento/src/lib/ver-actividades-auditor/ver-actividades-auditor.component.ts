@@ -8,6 +8,7 @@ import { takeUntil, switchMap, tap } from 'rxjs/operators';
 import { Columna, EstadoButtons, TipoColumna } from '@unicauca/shared/components/tabla';
 import { Soporte } from 'libs/modules/gestion-plan-responsable/data-access/src/lib/model/soperte.model';
 import { EvaluarEvidenciaComponent } from '../evaluar-evidencia/evaluar-evidencia.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'unicauca-ver-actividades-auditor',
@@ -49,6 +50,8 @@ export class VerActividadesAuditorComponent implements OnInit {
 
   public streamDatos$ = new BehaviorSubject<any[]>([]);
   public activarFiltroItems = true;
+  public opened = true;
+
 
   constructor(
     private router: Router,
@@ -56,7 +59,8 @@ export class VerActividadesAuditorComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private actividadesService: ActividadesService,
     private gestionPlanResponsableService: GestionPlanResponsableService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.verificarEstadoComponente();
@@ -112,6 +116,10 @@ export class VerActividadesAuditorComponent implements OnInit {
       data: $event,
     });
     dialogRef.afterClosed().subscribe((x) => this.actualizarSoporte());
+  }
+
+  public click(): void{
+    this.opened = !this.opened
   }
 
 }

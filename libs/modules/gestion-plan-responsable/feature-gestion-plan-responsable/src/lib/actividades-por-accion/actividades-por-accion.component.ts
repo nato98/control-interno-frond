@@ -38,6 +38,7 @@ export class ActividadesPorAccionComponent implements OnInit {
 
   public streamDatos$ = new BehaviorSubject<any[]>([]);
   public activarFiltroItems = true;
+  public opened = true;
 
   constructor(
     private router: Router,
@@ -102,5 +103,10 @@ export class ActividadesPorAccionComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((x) => this.actualizarSoporte());
   }
+
+  public click(): void{
+    this.opened = !this.opened
+  }
+
 }
 

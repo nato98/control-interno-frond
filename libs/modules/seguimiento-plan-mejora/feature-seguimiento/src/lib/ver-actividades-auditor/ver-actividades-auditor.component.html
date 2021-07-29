@@ -19,38 +19,32 @@
     </div>
     <!-- Las actividades -->
     <div>
-        <mat-drawer-container class="container">
-            <mat-drawer #drawer mode="side" opened>
-                <div>
-                    <mat-list>
-                        <mat-list-item>
-                            <h4>Actividades</h4>
+        <mat-sidenav-container class="example-container">
+            <mat-sidenav #sidenav mode="side" [opened]="opened" class="example-sidenav">
+                <mat-list>
+                    <mat-list-item>
+                        <h4>Actividades</h4>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <!-- <mat-list-item></mat-list-item> -->
+                    <mat-radio-group class="margen" fxLayout="column" fxLayoutGap="30px" [(ngModel)]="actividadSeleccionada" (ngModelChange)="onChangeActividad()">
+                        <mat-list-item *ngFor="let actividad of listaActividades">
+                            <mat-radio-button [value]="actividad">
+                                {{actividad.actividad}}
+                            </mat-radio-button>
                         </mat-list-item>
-                        <mat-divider></mat-divider>
-                        <!-- <mat-list-item></mat-list-item> -->
-                        <mat-radio-group class="margen" fxLayout="column" fxLayoutGap="30px" [(ngModel)]="actividadSeleccionada" (ngModelChange)="onChangeActividad()">
-                            <mat-list-item *ngFor="let actividad of listaActividades">
-                                <mat-radio-button [value]="actividad">
-                                    {{actividad.actividad}}
-                                </mat-radio-button>
-                            </mat-list-item>
-                        </mat-radio-group>
-                        <!-- <mat-list-item></mat-list-item> -->
-                        <mat-divider></mat-divider>
-                    </mat-list>
-                </div>
-            </mat-drawer>
-            <mat-drawer-content>
-                <div fxLayoutAlign="end end">
-                    <button type="button" mat-button (click)="drawer.toggle()">
-                  Extraer
-                </button>
-                </div>
-                <div>
+                    </mat-radio-group>
+                    <mat-divider></mat-divider>
+                </mat-list>
+            </mat-sidenav>
+
+            <mat-sidenav-content>
+                <div fxLayoutAlign="end end"><button mat-raised-button color="primary" type="button" (click)="click()">{{opened ? 'Extraer' : 'Abrir'}} actividades</button></div>
+                <p>
                     <unicauca-tabla [inTituloTabla]="titulo" [inColumnas]="columnas" [inStreamDatos$]="streamDatos$" [inActivarBtns]="estadoButtons" [inActivarFiltroItems]="activarFiltroItems" inPlaceholderFiltroItems="Filtrar" (outEditar$)="onEditar($event)">
                     </unicauca-tabla>
-                </div>
-            </mat-drawer-content>
-        </mat-drawer-container>
+                </p>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
     </div>
 </div>
