@@ -36,5 +36,9 @@ module.exports = {
     '<rootDir>/libs/modules/seguimiento-plan-mejora/data-access',
     '<rootDir>/libs/shared/components/tabla-lideres',
     '<rootDir>/libs/shared/components/spinner',
+    '<rootDir>/libs/modules/gestion-plan-responsable/feature-shell',
+    '<rootDir>/libs/modules/gestion-plan-responsable/data-access',
+    '<rootDir>/libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable',
+    '<rootDir>/libs/shared/components/dialogo-simple',
   ],
 };

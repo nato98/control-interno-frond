@@ -1012,6 +1012,112 @@
           }
         }
       }
+    },
+    "modules-gestion-plan-responsable-feature-shell": {
+      "projectType": "library",
+      "root": "libs/modules/gestion-plan-responsable/feature-shell",
+      "sourceRoot": "libs/modules/gestion-plan-responsable/feature-shell/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/modules/gestion-plan-responsable/feature-shell/src/**/*.ts",
+              "libs/modules/gestion-plan-responsable/feature-shell/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/modules/gestion-plan-responsable/feature-shell"
+          ],
+          "options": {
+            "jestConfig": "libs/modules/gestion-plan-responsable/feature-shell/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "modules-gestion-plan-responsable-data-access": {
+      "projectType": "library",
+      "root": "libs/modules/gestion-plan-responsable/data-access",
+      "sourceRoot": "libs/modules/gestion-plan-responsable/data-access/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/modules/gestion-plan-responsable/data-access/src/**/*.ts",
+              "libs/modules/gestion-plan-responsable/data-access/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/modules/gestion-plan-responsable/data-access"
+          ],
+          "options": {
+            "jestConfig": "libs/modules/gestion-plan-responsable/data-access/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "modules-gestion-plan-responsable-feature-gestion-plan-responsable": {
+      "projectType": "library",
+      "root": "libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable",
+      "sourceRoot": "libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable/src/**/*.ts",
+              "libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable"
+          ],
+          "options": {
+            "jestConfig": "libs/modules/gestion-plan-responsable/feature-gestion-plan-responsable/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "shared-components-dialogo-simple": {
+      "projectType": "library",
+      "root": "libs/shared/components/dialogo-simple",
+      "sourceRoot": "libs/shared/components/dialogo-simple/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/components/dialogo-simple/src/**/*.ts",
+              "libs/shared/components/dialogo-simple/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/components/dialogo-simple"],
+          "options": {
+            "jestConfig": "libs/shared/components/dialogo-simple/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

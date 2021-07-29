@@ -62,6 +62,12 @@
     "modules-seguimiento-plan-mejora-feature-seguimiento": { "tags": [] },
     "modules-seguimiento-plan-mejora-data-access": { "tags": [] },
     "shared-components-tabla-lideres": { "tags": [] },
-    "shared-components-spinner": { "tags": [] }
+    "shared-components-spinner": { "tags": [] },
+    "modules-gestion-plan-responsable-feature-shell": { "tags": [] },
+    "modules-gestion-plan-responsable-data-access": { "tags": [] },
+    "modules-gestion-plan-responsable-feature-gestion-plan-responsable": {
+      "tags": []
+    },
+    "shared-components-dialogo-simple": { "tags": [] }
   }
 }

@@ -16,7 +16,6 @@ import { RouterModule } from '@angular/router';
               module.ModulesSeguimientoPlanMejoraFeatureSeguimientoModule
           ),
       },
-      /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
     ]),
   ],
 })

@@ -7,6 +7,7 @@ export interface Columna {
 
 export enum TipoColumna {
   FECHA = 1,
+  FECHA_SIN_HORA,
   ACCIONES,
   ROL,
   SELECT

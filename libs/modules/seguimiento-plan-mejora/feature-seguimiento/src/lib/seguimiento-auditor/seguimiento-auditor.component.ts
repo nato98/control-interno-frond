@@ -6,6 +6,7 @@ import { PlanAuditorDTO } from 'libs/modules/seguimiento-plan-mejora/data-access
 import { ListaPlanAuditorService } from 'libs/modules/seguimiento-plan-mejora/data-access/src/lib/service/lista-plan-auditor.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'unicauca-seguimiento-auditor',
@@ -36,7 +37,7 @@ export class SeguimientoAuditorComponent implements OnInit {
     { nombreCelda: 'estado', nombreCeldaHeader: 'Estado' },
     //{ nombreCelda: 'tipoAccion', nombreCeldaHeader: 'Tipo acción' },
     { nombreCelda: 'fechaUltimoSeguimiento', nombreCeldaHeader: 'Fecha último seguimiento' },
-    { nombreCelda: 'nombreResponsable', nombreCeldaHeader: 'Responsable'},
+    { nombreCelda: 'nombreResponsable', nombreCeldaHeader: 'Líder de proceso'},
     { nombreCelda: 'efectividad', nombreCeldaHeader: 'Efectividad'},
     { nombreCelda: 'avance', nombreCeldaHeader: '% de avance'},
     { nombreCelda: 'evidencias', nombreCeldaHeader: 'Evidencias', tipo: TipoColumna.ACCIONES,},
@@ -55,14 +56,16 @@ export class SeguimientoAuditorComponent implements OnInit {
   correo: string;
   rol: string;
 
-  constructor(private servicio: ListaPlanAuditorService, private authService: AuthService,) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private servicio: ListaPlanAuditorService,
+    ) {
   }
   ngOnInit(): void {
     this.correo = this.authService.getUsuario().objPerson.email;
     this.rol = this.authService.getUsuario().objRole[0];
     new Promise((res, rej) => {
-      console.log(this.authService.getUsuario().objPerson.id);
-
       const idAuditor = this.authService.getUsuario().objPerson.id;
       res(idAuditor);
     }).then((idAuditor: string) => {
@@ -73,5 +76,10 @@ export class SeguimientoAuditorComponent implements OnInit {
         this.streamDatos$.next(this.data)
       });
     })
+  }
+
+  onVerActividades($event){
+    this.router.navigate(['/home/seguimiento-plan-mejora/seguimiento/actividades',
+    $event.idPlan, $event.nombrePlan, $event.fechaLimite]);
   }
 }

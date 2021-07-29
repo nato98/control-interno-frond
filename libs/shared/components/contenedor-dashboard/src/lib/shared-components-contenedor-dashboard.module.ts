@@ -1,3 +1,5 @@
+import { LayoutModule } from '@angular/cdk/layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, FlexLayoutModule, LayoutModule],
   exports: [DashboardComponent],
 })
 export class SharedComponentsContenedorDashboardModule {}

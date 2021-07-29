@@ -82,7 +82,7 @@ export function crearItemsMenuPorTipoUsuario(
       itemsMenu: [
         { ruta: 'inicio', icon: 'home', nombre: 'Inicio' },
         {
-          ruta: 'planes-mejora/historial/planes',
+          ruta: 'gestion-plan-responsable/gestion-plan-responsable',
           icon: 'library_books',
           nombre: 'Plan de mejoramiento',
         },
