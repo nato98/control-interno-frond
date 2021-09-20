@@ -68,6 +68,9 @@
     "modules-gestion-plan-responsable-feature-gestion-plan-responsable": {
       "tags": []
     },
-    "shared-components-dialogo-simple": { "tags": [] }
+    "shared-components-dialogo-simple": { "tags": [] },
+    "modules-estadisticas-data-access": { "tags": [] },
+    "modules-estadisticas-feature-estadisticas": { "tags": [] },
+    "modules-estadisticas-feature-shell": { "tags": [] }
   }
 }

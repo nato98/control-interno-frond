@@ -116,6 +116,15 @@
       ],
       "@unicauca/shared/components/dialogo-simple": [
         "libs/shared/components/dialogo-simple/src/index.ts"
+      ],
+      "@unicauca/modules/estadisticas/data-access": [
+        "libs/modules/estadisticas/data-access/src/index.ts"
+      ],
+      "@unicauca/modules/estadisticas/feature-estadisticas": [
+        "libs/modules/estadisticas/feature-estadisticas/src/index.ts"
+      ],
+      "@unicauca/modules/estadisticas/feature-shell": [
+        "libs/modules/estadisticas/feature-shell/src/index.ts"
       ]
     }
   },

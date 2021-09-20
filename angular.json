@@ -1118,6 +1118,83 @@
           }
         }
       }
+    },
+    "modules-estadisticas-data-access": {
+      "projectType": "library",
+      "root": "libs/modules/estadisticas/data-access",
+      "sourceRoot": "libs/modules/estadisticas/data-access/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/modules/estadisticas/data-access/src/**/*.ts",
+              "libs/modules/estadisticas/data-access/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/modules/estadisticas/data-access"],
+          "options": {
+            "jestConfig": "libs/modules/estadisticas/data-access/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "modules-estadisticas-feature-estadisticas": {
+      "projectType": "library",
+      "root": "libs/modules/estadisticas/feature-estadisticas",
+      "sourceRoot": "libs/modules/estadisticas/feature-estadisticas/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/modules/estadisticas/feature-estadisticas/src/**/*.ts",
+              "libs/modules/estadisticas/feature-estadisticas/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/modules/estadisticas/feature-estadisticas"
+          ],
+          "options": {
+            "jestConfig": "libs/modules/estadisticas/feature-estadisticas/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "modules-estadisticas-feature-shell": {
+      "projectType": "library",
+      "root": "libs/modules/estadisticas/feature-shell",
+      "sourceRoot": "libs/modules/estadisticas/feature-shell/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/modules/estadisticas/feature-shell/src/**/*.ts",
+              "libs/modules/estadisticas/feature-shell/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/modules/estadisticas/feature-shell"],
+          "options": {
+            "jestConfig": "libs/modules/estadisticas/feature-shell/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
