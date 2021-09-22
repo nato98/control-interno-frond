@@ -7,6 +7,7 @@ import { environment } from 'apps/control-interno/src/environments/environment';
 
 @Injectable()
 export class HallazgoService {
+
   private urlEndPoint: string = environment.apiRoot;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -40,5 +41,21 @@ export class HallazgoService {
   }
   public eliminarHallazgo(id: number): Observable<any> {
     return this.http.delete<any>(this.urlEndPoint + `hallazgo/hallazgos/${id}`);
+  }
+
+  /**
+   * Obtiene todos los hallazgos de un proceso específico
+   * @param idProceso Identificador del Proceso
+   */
+  public getHallazgosProceso(idProceso:number){
+    return this.http.get<any>(this.urlEndPoint + `hallazgo/hallazgos-proceso/${idProceso}`);
+  }
+
+  /**
+   * Devuelve todos los hallazgos existentes.
+   * @returns Objeto con todos los hallazgos registrados en BD
+   */
+  public getTodosHallazgos(): Observable<any> {
+    return this.http.get<any>(this.urlEndPoint + 'hallazgo/hallazgos');
   }
 }

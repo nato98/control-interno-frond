@@ -11,6 +11,9 @@ export class AccionesService {
 
   constructor(private http: HttpClient) {}
 
+  public getAcciones(): Observable<any> {
+    return this.http.get<any>(this.urlEndPoint + 'acciones');
+  }
   public getAccionPorIdCausa(idCausa: number): Observable<any>{
     return this.http.get<any>(this.urlEndPoint+`getAccionesPorIdCausa/${idCausa}`);
   }
@@ -26,4 +29,9 @@ export class AccionesService {
   public editarAccion(accion: Accion, idAccion: number): Observable<any>{
     return this.http.put<any>(this.urlEndPoint+`acciones/${idAccion}`, accion);
   }
+  public getAccionesPorProceso(idProceso: number): Observable<any>{
+    return this.http.get<any>(this.urlEndPoint+`acciones-proceso/${idProceso}`);
+  }
+
+
 }

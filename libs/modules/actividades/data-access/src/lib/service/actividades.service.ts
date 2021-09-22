@@ -12,6 +12,9 @@ export class ActividadesService {
 
   constructor(private http: HttpClient) {}
 
+  public getActividades(): Observable<any> {
+    return this.http.get<any>(this.urlEndPoint + 'actividad');
+  }
   public getActividadesPorIdAccion(idAccion: number): Observable<any>{
     return this.http.get<any>(this.urlEndPoint+`getActividadesPorIdAccion/${idAccion}`);
   }
@@ -35,5 +38,9 @@ export class ActividadesService {
       },
     };
     return this.http.get<any>(`${this.urlEndPoint}getActividadesPorIdPlan`, options);
+  }
+
+  public getActividadesPorProceso(idProceso: number): Observable<any>{
+    return this.http.get<any>(this.urlEndPoint+`actividades-proceso/${idProceso}`);
   }
 }

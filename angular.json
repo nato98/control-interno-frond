@@ -1195,6 +1195,31 @@
           }
         }
       }
+    },
+    "shared-components-circulo": {
+      "projectType": "library",
+      "root": "libs/shared/components/circulo",
+      "sourceRoot": "libs/shared/components/circulo/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/components/circulo/src/**/*.ts",
+              "libs/shared/components/circulo/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/components/circulo"],
+          "options": {
+            "jestConfig": "libs/shared/components/circulo/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

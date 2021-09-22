@@ -82,6 +82,13 @@ const routes: Routes = [
             (module) => module.ModulesGestionPlanResponsableFeatureShellModule
           ),
       },
+      {
+        path: 'estadisticas',
+        loadChildren: () =>
+          import('@unicauca/modules/estadisticas/feature-shell').then(
+            (module) => module.ModulesEstadisticasFeatureShellModule
+          ),
+      },
     ],
   },
   {

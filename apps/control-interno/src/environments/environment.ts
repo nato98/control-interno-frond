@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 export const environment = {
   production: false,
-  apiRoot: 'https://back-control-interno.herokuapp.com/api/',
-  authRoot: 'https://back-control-interno.herokuapp.com/oauth/',
-  // apiRoot: 'http://localhost:5000/api/',
-  // authRoot: 'http://localhost:5000/oauth/',
+  /*apiRoot: 'https://back-control-interno.herokuapp.com/api/',
+  authRoot: 'https://back-control-interno.herokuapp.com/oauth/',*/
+  apiRoot: 'http://localhost:5000/api/',
+  authRoot: 'http://localhost:5000/oauth/',
 };
 
 /*

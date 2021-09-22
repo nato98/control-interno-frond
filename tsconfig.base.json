@@ -125,6 +125,9 @@
       ],
       "@unicauca/modules/estadisticas/feature-shell": [
         "libs/modules/estadisticas/feature-shell/src/index.ts"
+      ],
+      "@unicauca/shared/components/circulo": [
+        "libs/shared/components/circulo/src/index.ts"
       ]
     }
   },

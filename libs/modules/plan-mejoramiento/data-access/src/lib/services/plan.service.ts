@@ -102,6 +102,10 @@ export class PlanService {
     return this.http.get<plan[]>(this.urlEndPoint + 'mpdm/planes');
   }
 
+  getPlanesPorProceso(idProceso: number): Observable<any> {
+    return this.http.get<any>(this.urlEndPoint+ `mpdm/planes-proceso/${idProceso}`);
+  }
+
   getResumenPlan(codeUrl: string): Observable<any>{
     const options = {
       headers: {
