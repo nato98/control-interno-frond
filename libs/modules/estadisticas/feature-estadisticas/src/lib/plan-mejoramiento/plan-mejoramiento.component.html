@@ -1,1 +1,16 @@
-<p>plan-mejoramiento works!</p>
+<div class="row">
+  <section class="col">
+    <div fxFill fxLayout="column" fxLayoutGap="20px" class="paddingx">
+      <div fxFill class="paddingx">
+        <unicauca-tabla
+          [inTituloTabla]="titulo"
+          [inColumnas]="columnas"
+          [inStreamDatos$]="streamDatos$"
+          [inActivarBtns]="estadoButtons"
+          (outVisualizar$)="onVerDetalles($event)"
+        >
+        </unicauca-tabla>
+      </div>
+    </div>
+  </section>
+</div>

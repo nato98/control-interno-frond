@@ -3,15 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
 
-import {
-  plan,
-  PlanService,
-} from '@unicauca/modules/plan-mejoramiento/data-access';
+
 import {
   Columna,
   EstadoButtons,
   TipoColumna,
 } from '@unicauca/shared/components/tabla';
+
+import {
+  plan,
+  PlanService,
+} from '@unicauca/modules/plan-mejoramiento/data-access';
 import { HallazgoService } from '@unicauca/modules/hallazgos/data-access';
 import { AccionesService } from '@unicauca/modules/acciones/data-access';
 import { ActividadesService } from '@unicauca/modules/actividades/data-access';
@@ -22,13 +24,15 @@ import { ActividadesService } from '@unicauca/modules/actividades/data-access';
   styleUrls: ['./proceso-individual.component.scss'],
 })
 export class ProcesoIndividualComponent implements OnInit {
+
   streamDatos$ = new BehaviorSubject<any[]>([]);
   planes: plan[];
   titulo = 'Planes de Mejoramiento';
   idProceso: number;
 
   columnas: Columna[] = [
-    { nombreCelda: 'idPlanMejoramiento', nombreCeldaHeader: 'Identificador' },
+    { nombreCelda: 'idPlanMejoramiento',
+      nombreCeldaHeader: 'Identificador' },
     {
       nombreCelda: 'nombre',
       nombreCeldaHeader: 'Nombre Plan de Mejora',
@@ -77,7 +81,7 @@ export class ProcesoIndividualComponent implements OnInit {
     this.planService
       .getPlanesPorProceso(this.idProceso)
       .subscribe((response) => {
-        this.planes = response;
+        this.planes = response.planes;
         this.streamDatos$.next(this.planes);
       });
   }
@@ -110,13 +114,10 @@ export class ProcesoIndividualComponent implements OnInit {
     const planVer: plan[] = this.planes.filter(
       (plan) => plan.idPlanMejoramiento === planSeleccionado.idPlanMejoramiento
     );
-    console.log(planVer);
+    let _idPlan = planVer[0].idPlanMejoramiento.replace('/','%');
+    console.log(_idPlan);
     this.router.navigate([
-      `home/estadisticas/all/plan-mejora/
-      ${planVer[0].codeURL}`,
+      `home/estadisticas/all/plan-mejora/${_idPlan}`,
     ]);
-    /*this.router.navigate([
-      `home/estadisticas/all/plan-mejora/${planSeleccionado.idPlanMejoramiento}`,
-    ]);*/
   }
 }
