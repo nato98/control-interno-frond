@@ -44,5 +44,6 @@ module.exports = {
     '<rootDir>/libs/modules/estadisticas/feature-estadisticas',
     '<rootDir>/libs/modules/estadisticas/feature-shell',
     '<rootDir>/libs/shared/components/circulo',
+    '<rootDir>/libs/shared/components/graficos',
   ],
 };

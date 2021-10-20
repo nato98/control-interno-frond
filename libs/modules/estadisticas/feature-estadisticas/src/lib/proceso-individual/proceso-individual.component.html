@@ -15,6 +15,36 @@
   </section>
 </div>
 
-Hallazgos: {{noHallazgos}}
-Acciones: {{noAcciones}}
-Actividades: {{noActividades}}
+<div class="card-margin">
+  <div class="fxFill" class="paddingx">
+    <div class="paddingx">
+      <div fxLayout="row" fxLayoutAlign="space-around center">
+        <unicauca-circulo
+          [text]="noPlanes"
+          [title]="titlePlanes"
+        ></unicauca-circulo>
+        <unicauca-circulo
+          [text]="noHallazgos"
+          [title]="titleHallazgos"
+        ></unicauca-circulo>
+        <unicauca-circulo
+          [text]="noAcciones"
+          [title]="titleAcciones"
+        ></unicauca-circulo>
+        <unicauca-circulo
+          [text]="noActividades"
+          [title]="titleActividades"
+        ></unicauca-circulo>
+      </div>
+      <div class="position">
+        <unicauca-pie-chart [legendTitle]="titleAcciones" [single]="dataActividades"></unicauca-pie-chart>
+      </div>
+      <br>
+      <div class="position">
+        <unicauca-pie-chart [legendTitle]="titlePlanes" [single]="dataPlanes"></unicauca-pie-chart>
+      </div>
+
+    </div>
+  </div>
+</div>
+

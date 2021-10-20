@@ -53,9 +53,58 @@ export class ProcesoIndividualComponent implements OnInit {
   };
 
   /*INFORMACION DEL PROCESO*/
+  titleHallazgos: String = "Hallazgos";
+  titlePlanes: String = "Planes";
+  titleAcciones: String = "Actividades";
+  titleActividades: String = "Acciones";
   noHallazgos: String;
   noActividades: String;
   noAcciones: String;
+  noPlanes: String;
+
+  /**PIE-CHART ACTIVIDADES */
+  dataActividades = [
+    {
+      "name": "Incumplidas",
+      "value": 3
+    },
+    {
+      "name": "Ejecutadas",
+      "value": 5
+    },
+    {
+      "name": "Activas",
+      "value": 7
+    },
+      {
+      "name": "Por vencerse",
+      "value": 6
+    }
+  ];
+
+  /*PIE-CHART PLANES*/
+  dataPlanes = [
+    {
+      "name": "Formulación",
+      "value": 3
+    },
+    {
+      "name": "Ejecución",
+      "value": 5
+    },
+    {
+      "name": "Finalizado",
+      "value": 7
+    },
+    {
+      "name": "Revisión",
+      "value": 6
+    },
+    {
+      "name": "Suscripción",
+      "value": 6
+    }
+  ];
 
   constructor(
     private router: Router,
@@ -82,6 +131,7 @@ export class ProcesoIndividualComponent implements OnInit {
       .getPlanesPorProceso(this.idProceso)
       .subscribe((response) => {
         this.planes = response.planes;
+        this.noPlanes = this.planes.length.toString();
         this.streamDatos$.next(this.planes);
       });
   }

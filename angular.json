@@ -1220,6 +1220,31 @@
           }
         }
       }
+    },
+    "shared-components-graficos": {
+      "projectType": "library",
+      "root": "libs/shared/components/graficos",
+      "sourceRoot": "libs/shared/components/graficos/src",
+      "prefix": "unicauca",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/components/graficos/src/**/*.ts",
+              "libs/shared/components/graficos/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/components/graficos"],
+          "options": {
+            "jestConfig": "libs/shared/components/graficos/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

@@ -3,29 +3,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
 
-
 import {
   Columna,
   EstadoButtons,
   TipoColumna,
 } from '@unicauca/shared/components/tabla';
-
+import { ActividadesService } from '@unicauca/modules/actividades/data-access';
 
 @Component({
   selector: 'unicauca-plan-mejoramiento',
   templateUrl: './plan-mejoramiento.component.html',
-  styleUrls: ['./plan-mejoramiento.component.scss']
+  styleUrls: ['./plan-mejoramiento.component.scss'],
 })
 export class PlanMejoramientoComponent implements OnInit {
   streamDatos$ = new BehaviorSubject<any[]>([]);
   titulo = 'Actividades';
-  idProceso: number;
+  idPlan: string;
+  actividades: [];
 
   columnas: Columna[] = [
-    { nombreCelda: 'idPlanMejoramiento',
-      nombreCeldaHeader: 'Identificador' },
+    { nombreCelda: 'idActividad', nombreCeldaHeader: 'Identificador' },
     {
-      nombreCelda: 'nombre',
+      nombreCelda: 'actividad',
       nombreCeldaHeader: 'Actividad',
     },
     {
@@ -43,12 +42,31 @@ export class PlanMejoramientoComponent implements OnInit {
     visualizar: true,
   };
 
-  constructor() { }
+  constructor(
+    private actividadesService: ActividadesService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.idPlan = params.idPlan.replace('%', '/');
+    });
+    this.getTodasActividades();
   }
 
-  public onVerDetalles(actividadSeleccionada){
+  public getTodasActividades() {
+    this.actividadesService
+      .getActividadesPorIdPlan(this.idPlan)
+      .subscribe((response) => {
+        this.actividades = response;
+        this.streamDatos$.next(this.actividades);
+      },
+      () => {
+        this.streamDatos$.next([]);
+      });
+  }
+  public onVerDetalles(actividadSeleccionada) {
     console.log(actividadSeleccionada);
   }
 }

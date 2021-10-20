@@ -45,15 +45,32 @@ export class ProcesosPmiComponent implements OnInit {
   };
 
   /*Plan de Mejora Institucional*/
-
-  titleHallazgos: String = 'Hallazgos';
-  titleAcciones: String = 'Acciones';
-  titlePlanes: String = 'Planes de Mejora';
-  titleActividades: String = 'Actividades';
-  noHallazgos: String;
-  noPlanes: String;
-  noAcciones: String;
-  noActividades: String;
+  quantities = [];
+  titleActividades = "Actividades";
+  numActividades = 0;
+  numHallazgos = 0;
+  numAcciones = 0;
+  numPlanes = 0;
+  /**PIE CHART */
+  activities = [];
+  data = [
+    {
+      name: 'Incumplidas',
+      value: 3,
+    },
+    {
+      name: 'Ejecutadas',
+      value: 5,
+    },
+    {
+      name: 'Activas',
+      value: 7,
+    },
+    {
+      name: 'Por vencerse',
+      value: 6,
+    },
+  ];
 
   constructor(
     private router: Router,
@@ -66,10 +83,11 @@ export class ProcesosPmiComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTodosProcesos();
-    this.getNoHallazgos();
     this.getNoPlanes();
-    this.getNoActividades();
+    this.getNoHallazgos();
     this.getNoAcciones();
+    this.getActividades();
+
   }
 
   getTodosProcesos(): void {
@@ -86,26 +104,47 @@ export class ProcesosPmiComponent implements OnInit {
 
   getNoHallazgos(): void {
     this.hallazgoService.getTodosHallazgos().subscribe((response) => {
-      this.noHallazgos = response.hallazgo.length;
+      this.numHallazgos = response.hallazgo.length;
+      this.quantities.push({
+        quantity: response.hallazgo.length,
+        title: 'Hallazgos',
+      });
     });
   }
 
   getNoPlanes(): void {
     this.planService.getPlanes().subscribe((response: any) => {
-      this.noPlanes = response.planes.length;
+      this.numPlanes = response.planes.length;
+      this.quantities.push({
+        quantity: response.planes.length,
+        title: 'Planes',
+      });
+    });
+  }
+
+  getActividades(): void {
+    this.actividadesService.getActividades().subscribe((response: any) => {
+      this.activities = response.activades;
+      this.numActividades = response.actividades.length;
+      /*this.quantities.push({
+        quantity: this.activities.length,
+        title: 'Actividades',
+      });*/
     });
   }
 
   getNoAcciones(): void {
-    this.actividadesService.getActividades().subscribe((response: any) => {
-      this.noActividades = response.actividades.length;
+    this.accionesService.getAcciones().subscribe((response: any) => {
+      this.numAcciones = response.acciones.length;
+      this.quantities.push({
+        quantity: response.acciones.length,
+        title: 'Acciones',
+      });
     });
   }
 
-  getNoActividades(): void {
-    this.accionesService.getAcciones().subscribe((response: any) => {
-      this.noAcciones = response.acciones.length;
-    });
+  buildDataActivities(): void{
+
   }
 
   onVerDetalles(procesoSeleccionado): void {

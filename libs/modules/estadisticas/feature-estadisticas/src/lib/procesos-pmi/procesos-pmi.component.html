@@ -1,4 +1,5 @@
 <!--PROCESOS-->
+<br />
 <div class="row">
   <section class="col">
     <div fxFill fxLayout="column" fxLayoutGap="20px" class="paddingx">
@@ -22,35 +23,43 @@
   <div class="fxFill" class="paddingx">
     <div class="paddingx">
       <div fxLayout="row" fxLayoutAlign="space-around center">
+        <br />
         <h2>Plan de Mejora Institucional</h2>
         <unicauca-circulo
-          [text]="noPlanes"
-          [title]="titlePlanes"
+          [text]="numPlanes"
+          [title]="'Planes de Mejora'"
         ></unicauca-circulo>
         <unicauca-circulo
-          [text]="noHallazgos"
-          [title]="titleHallazgos"
+          [text]="numHallazgos"
+          [title]="'Hallazgos'"
         ></unicauca-circulo>
         <unicauca-circulo
-          [text]="noAcciones"
-          [title]="titleAcciones"
+          [text]="numAcciones"
+          [title]="'Acciones'"
         ></unicauca-circulo>
         <unicauca-circulo
-          [text]="noActividades"
-          [title]="titleActividades"
+          [text]="numActividades"
+          [title]="'Actividades'"
         ></unicauca-circulo>
 
+
+        <!--<div *ngFor="let detail of quantities">
+          <unicauca-circulo
+          [text]="detail.quantity"
+          [title]="detail.title"
+        ></unicauca-circulo>
+        </div>-->
       </div>
-      <div layout-align="between center"></div>
-
-
+      <div class="position">
+        <unicauca-pie-chart
+          [legendTitle]="titleActividades"
+          [single]="data"
+        ></unicauca-pie-chart>
+      </div>
     </div>
   </div>
 </div>
 
-<div>
- <!--<unicauca-pie></unicauca-pie>-->
-</div>
 <!--<unicauca-circulo [text] = "20">
 </unicauca-circulo>-->
 <!--<h2>Plan de Mejora Institucional</h2>

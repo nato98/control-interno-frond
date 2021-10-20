@@ -43,4 +43,8 @@ export class ActividadesService {
   public getActividadesPorProceso(idProceso: number): Observable<any>{
     return this.http.get<any>(this.urlEndPoint+`actividades-proceso/${idProceso}`);
   }
+
+  public getActividadesPorPlan(idPlan:string): Observable<any>{
+    return this.http.get<any>(this.urlEndPoint+`actividades-plan/${idPlan}`);
+  }
 }

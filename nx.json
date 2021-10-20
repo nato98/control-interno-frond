@@ -72,6 +72,7 @@
     "modules-estadisticas-data-access": { "tags": [] },
     "modules-estadisticas-feature-estadisticas": { "tags": [] },
     "modules-estadisticas-feature-shell": { "tags": [] },
-    "shared-components-circulo": { "tags": [] }
+    "shared-components-circulo": { "tags": [] },
+    "shared-components-graficos": { "tags": [] }
   }
 }

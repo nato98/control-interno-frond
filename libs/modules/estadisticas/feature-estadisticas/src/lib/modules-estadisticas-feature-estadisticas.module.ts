@@ -2,9 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+
+import { ModulesEstadisticasDataAccessModule } from '@unicauca/modules/estadisticas/data-access';
 import { SharedComponentsTablaModule } from '@unicauca/shared/components/tabla';
 import { SharedComponentsCirculoModule } from '@unicauca/shared/components/circulo';
-import { ModulesEstadisticasDataAccessModule } from '@unicauca/modules/estadisticas/data-access';
+import { SharedComponentsGraficosModule } from '@unicauca/shared/components/graficos';
+
 import {
   PlanService,
   ProcesoService,
@@ -39,6 +42,7 @@ const routes: Routes = [
 
     SharedComponentsTablaModule,
     SharedComponentsCirculoModule,
+    SharedComponentsGraficosModule,
 
     ModulesEstadisticasDataAccessModule,
 
