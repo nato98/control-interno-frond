@@ -88,12 +88,12 @@ export class HistorialComponent implements OnInit {
     Swal.fire({
       title: '¿Estás seguro que desea eliminar este responsable?',
       showDenyButton: true,
-      showCancelButton: true,
       confirmButtonText: `Si, eliminar`,
       denyButtonText: `No, cancelar`,
     }).then((result) => {
       if (result.isConfirmed) {
         this.usuarioService.delete(responsable.id).subscribe(() => {
+          this.listarUsuarios();
           const lista = this.streamDatos$.value.filter(
             (responsable) => responsable.rol === 'ROLE_responsable'
           );
@@ -104,8 +104,6 @@ export class HistorialComponent implements OnInit {
             'success'
           );
         });
-      } else if (result.isDenied) {
-        Swal.fire('Eliminación cancelada', '', 'info');
       }
     });
   }

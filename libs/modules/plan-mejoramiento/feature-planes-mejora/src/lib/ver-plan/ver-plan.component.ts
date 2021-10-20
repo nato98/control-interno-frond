@@ -8,6 +8,7 @@ import {
   MatTreeFlatDataSource,
 } from '@angular/material/tree';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '@unicauca/auth';
 import {
   Person,
   estadosPlan,
@@ -23,6 +24,7 @@ import {
   ObservacionesService,
   Observacion,
   ResumenPlan,
+  cambiarTextoAFecha,
 } from '@unicauca/modules/plan-mejoramiento/data-access';
 import {
   Columna,
@@ -81,14 +83,11 @@ export class ChecklistDatabase {
     this.servicioPlan
       .getResumenPlan(this.codeUrl)
       .subscribe((res: ResumenPlan[]) => {
-        console.log(res);
-
         const respuesta = this.arreglarResumenPlan(res);
         const data = this.buildFileTree(respuesta, 0);
         this.dataChange.next(data);
       }, err => {
         if (err.status === 404) {
-          console.log(err);
           this.dataChange.next([]);
         }
       });
@@ -191,7 +190,7 @@ export class ChecklistDatabase {
           [el.id_CAUSA]: el
         }), {})
         }))
-        console.log('listaCausas', listaCausas);
+        // console.log('listaCausas', listaCausas);
     // const listaHallazgos = this.fn(resumenBack);
     // const listaCausas1 = listaHallazgos.map(obj => ({...obj, causa: this.fn(obj.causa)}))
     // const listaCausar = listaCausas1.map(obj => (console.log('lis: ',this.fn(obj.causa))))
@@ -284,6 +283,8 @@ export class VerPlanComponent implements OnInit {
   formularioPlan: FormGroup;
   noHayDatosParaMostrar = false;
 
+  esAuditor = false;
+
   modoEdicionActivo: boolean;
   public objPlan: plan = new plan();
   private observacion: Observacion[] = [];
@@ -328,8 +329,7 @@ export class VerPlanComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private service: PlanService,
-    private userService: UserService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private servicioPlan: PlanService,
     private procesoService: ProcesoService,
@@ -341,6 +341,7 @@ export class VerPlanComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
     this.crearFormulario();
     this.cargarCatalogos();
     this.verificarEstadoComponente();
@@ -422,6 +423,8 @@ export class VerPlanComponent implements OnInit {
                 res.planMejoramiento.proceso.idProceso === proceso.idProceso
             )[0]
           );
+          this.formularioPlan.get('fechaInicio').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaInicio').value));
+          this.formularioPlan.get('fechaFin').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaFin').value));
       });
     this.observacionesService.getObservacionPorIdPlan(this.codeUrl).subscribe(
       (res) => {

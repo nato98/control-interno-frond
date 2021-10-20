@@ -67,7 +67,7 @@
                                             <!-- Botón volver -->
                                             <div fxLayoutAlign="center center" fxLayoutGap="60px">
                                                 <div *ngIf="mostrarBtnVolver" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-                                                    <button mat-raised-button color="primary" type="button" style="float: right" (click)="editarDatos()"> Editar </button>
+                                                    <button *ngIf="!esAuditor" mat-raised-button color="primary" type="button" style="float: right" (click)="editarDatos()"> Editar </button>
                                                     <button mat-raised-button color="warn" type="button" style="float: right" (click)="listar()"> Volver </button>
                                                 </div>
                                             </div>
@@ -76,7 +76,7 @@
                                 </div>
 
                                 <!-- Àrbol -->
-                                <div class="bordes-curvos padding">
+                                <!-- <div class="bordes-curvos padding">
                                     <mat-tree fxLayout="column" [dataSource]="dataSource" [treeControl]="treeControl">
                                         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
                                             <button mat-icon-button disabled></button> {{node.item}}
@@ -93,7 +93,7 @@
                                         </mat-tree-node>
                                     </mat-tree>
                                     <h3 *ngIf="noHayDatosParaMostrar" fxLayoutAlign="center center">No hay datos asociados al plan</h3>
-                                </div>
+                                </div> -->
 
                                 <!-- Observaciones -->
                                 <div class="bordes-curvos padding">
@@ -101,9 +101,6 @@
                                         <button mat-raised-button color="primary" (click)="abrir()">
                                           Agregar observación
                                         </button>
-                                        <div *ngIf="mostrarBtnVolver" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-                                            <button mat-raised-button color="warn" type="button" style="float: right" (click)="listar()"> Volver </button>
-                                        </div>
                                     </div>
                                     <unicauca-tabla [inTituloTabla]="'Observaciones'" [inColumnas]="columnas" [inStreamDatos$]="streamDatos$" [inActivarFiltroItems]="activarFiltroItems" [inActivarBtns]="estadoButtons" inPlaceholderFiltroItems="Filtrar observaciones" (outEditar$)="editarObservacion($event)"
                                         (outEliminar$)="eliminarObservacion($event)">

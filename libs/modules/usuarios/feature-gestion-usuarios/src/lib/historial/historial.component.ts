@@ -65,11 +65,10 @@ export class HistorialComponent implements OnInit {
         ),
         map((usuarios: any[]) =>
           usuarios.filter(
-            (usuario) => usuario.objRole.roleName !== 'ROLE_responsable'
+            (usuario) =>
+              usuario.objRole.roleName !== 'ROLE_responsable' &&
+              usuario.objRole.roleName !== 'ROLE_administrador'
           )
-        ),
-        tap((usuarios: any[]) =>
-          console.log(usuarios)
         ),
         map((usuarios: any[]) =>
           usuarios.map((usuario, index) => ({
@@ -89,7 +88,6 @@ export class HistorialComponent implements OnInit {
       .fire({
         title: '¿Estás seguro?',
         showDenyButton: true,
-        showCancelButton: true,
         confirmButtonText: `Si, eliminar`,
         denyButtonText: `No, cancelar`,
       })
@@ -106,8 +104,6 @@ export class HistorialComponent implements OnInit {
               'success'
             );
           });
-        } else if (result.isDenied) {
-          swal.fire('Eliminación cancelada', '', 'info');
         }
       });
   }

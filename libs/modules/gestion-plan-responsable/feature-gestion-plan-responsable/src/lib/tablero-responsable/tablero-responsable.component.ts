@@ -47,7 +47,7 @@ export class TableroResponsableComponent implements OnInit {
     eliminar: false,
     visualizar: false,
     adjuntarEvidencia: true,
-    upload: true,
+    upload: false,
   };
 
   public streamDatos$ = new BehaviorSubject<any[]>([]);

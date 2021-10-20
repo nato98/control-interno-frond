@@ -15,7 +15,7 @@
                             <!-- Indicador -->
                             <mat-form-field>
                                 <mat-label>Indicador</mat-label>
-                                <input matInput formControlName="indicador">
+                                <input matInput formControlName="indicador" [maxlength]="200">
                             </mat-form-field>
                             <!-- Descripción de la actividad -->
                             <mat-form-field fxLayout="column">
@@ -88,43 +88,8 @@
                     <div fxLayout="row" fxLayoutGap="20px">
                         <!-- Tabla responsable -->
                         <div fxFlex="80%">
-                            <mat-card>
-                                <mat-card-title> Asignar responsable </mat-card-title>
-                                <mat-card-content fxLayout="column" fxLayoutGap="30px">
-                                    <div fxLayout="row" fxLayoutAlign="space-between center">
-                                        <mat-form-field>
-                                            <input matInput [placeholder]="'Filtrar responsable'" (keyup)="onAplicarFiltroItems($event)" #input />
-                                        </mat-form-field>
-                                    </div>
-
-                                    <table mat-table [dataSource]="dataSource">
-
-                                        <!-- nombre Column -->
-                                        <ng-container matColumnDef="nombre">
-                                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-                                        </ng-container>
-
-                                        <!-- cargo Column -->
-                                        <ng-container matColumnDef="cargo">
-                                            <th mat-header-cell *matHeaderCellDef> Cargo </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.cargo}} </td>
-                                        </ng-container>
-
-                                        <!-- Checkbox Column -->
-                                        <ng-container matColumnDef="select">
-                                            <th mat-header-cell *matHeaderCellDef>Opciones</th>
-                                            <td mat-cell *matCellDef="let row">
-                                                <mat-checkbox [disabled]="mostrarBtnVolver" (click)="$event.stopPropagation()" (change)="$event ? onSeleccionarUnicaFila(row) : null" [checked]="selection.isSelected(row)"></mat-checkbox>
-                                        </ng-container>
-
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                                        </tr>
-                                    </table>
-                                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                                </mat-card-content>
-                            </mat-card>
+                            <unicauca-tabla-lider fxFill [inTituloTabla]="'Asignar responsable'" [inLider]="'Responsable'" [inColumnas]="columnas" [inStreamDatos$]="streamDatosAuditor$" [inActivarFiltroItems]="'true'" [inPlaceholderFiltroItems]="'Filtrar responsable'" [selectionLider]="selection"
+                                [validadorCheckRequerido]="validadorCheckAuditor" [validadorDisabledCheck]="mostrarBtnVolver" (outSeleccionarUnicaFila$)="onSeleccionarUnicaFilaLiderAuditor($event)"></unicauca-tabla-lider>
                         </div>
                         <!-- Botón de guardar -->
                         <div fxFlex="20%" fxLayoutAlign="center center">

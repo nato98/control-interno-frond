@@ -101,7 +101,7 @@ export class FeatureLoginComponent implements OnInit {
         this.authService.guardarToken(response.access_token);
         this.router.navigateByUrl('home');
 
-        let usuario = this.authService.getUsuario();
+        const usuario = this.authService.getUsuario();
         this.openSnackBar('Bienvenido ', `${usuario.objPerson.names}`);
 
         //swal.fire('Login', `Hola ${usuario.username}, tienes un token de acceso`, 'success');

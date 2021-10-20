@@ -31,7 +31,7 @@ export class HistorialComponent implements OnInit {
 
   unsubscribe$ = new Subject();
 
-  boolAjuntarEvidencia = false;
+  esAuditor = false;
   estadoButtons: EstadoButtons = {};
 
   /**Array de titulos de columnas */
@@ -70,7 +70,7 @@ export class HistorialComponent implements OnInit {
   ngOnInit(): void {
     this.correo = this.authService.getUsuario().objPerson.email;
     this.rol = this.authService.getUsuario().objRole[0];
-    this.boolAjuntarEvidencia = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
     this.llenarBotones();
 
     this.listar();
@@ -84,12 +84,11 @@ export class HistorialComponent implements OnInit {
   llenarBotones(){
     this.estadoButtons = {
       crear: true,
-      editar: true,
-      eliminar: true,
-      upload: true,
+      editar: !this.esAuditor,
+      eliminar: !this.esAuditor,
+      upload: false,
       visualizar: true,
       seleccionar: false,
-      adjuntarEvidencia: this.boolAjuntarEvidencia
     };
   }
 

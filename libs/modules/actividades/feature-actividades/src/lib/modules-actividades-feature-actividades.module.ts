@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedComponentsTablaModule } from '@unicauca/shared/components/tabla';
 import { ModulesAccionesDataAccessModule } from '@unicauca/modules/acciones/data-access';
+import { SharedComponentsTablaLideresModule } from '@unicauca/shared/components/tabla-lideres';
 import { ModulesActividadesDataAccessModule } from '@unicauca/modules/actividades/data-access';
 import { ModulesPlanMejoramientoDataAccessModule } from '@unicauca/modules/plan-mejoramiento/data-access';
 
@@ -31,6 +32,7 @@ import {MatTableModule} from '@angular/material/table';
     ReactiveFormsModule,
 
     SharedComponentsTablaModule,
+    SharedComponentsTablaLideresModule,
 
     ModulesAccionesDataAccessModule.forChild(),
     ModulesActividadesDataAccessModule.forChild(),

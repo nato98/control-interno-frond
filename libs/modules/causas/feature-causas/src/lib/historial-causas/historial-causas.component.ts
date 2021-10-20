@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../auth/src/lib/data-access/auth/auth.service';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
@@ -27,15 +28,11 @@ export class HistorialCausasComponent implements OnInit {
   unsubscribe$ = new Subject();
 
   hallazgo: Hallazgo;
-  causas: Causa[]= []
+  causas: Causa[]= [];
 
-  estadoButtons: EstadoButtons = {
-    crear: true,
-    editar: true,
-    eliminar: true,
-    upload: false,
-    visualizar: true,
-  };
+  esAuditor = false;
+
+  estadoButtons: EstadoButtons = {};
 
   columnas: Columna[] = [
     { nombreCelda: 'posicion', nombreCeldaHeader: 'Posición' },
@@ -51,11 +48,14 @@ export class HistorialCausasComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private causaService: CausaService,
     private estadosComunService: EstadosComunService,
   ) {}
 
   ngOnInit(): void {
+    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.llenarBotones();
     this.estadosComunService.customHallazgo
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((msg) => (this.hallazgo = msg));
@@ -64,6 +64,18 @@ export class HistorialCausasComponent implements OnInit {
       .subscribe();
     this.listarCausas();
   }
+
+  llenarBotones(){
+    this.estadoButtons = {
+      crear: true,
+      editar: !this.esAuditor,
+      eliminar: !this.esAuditor,
+      upload: false,
+      visualizar: true,
+      seleccionar: false,
+    };
+  }
+
 
   private listarCausas(): void {
     if (this.hallazgo !== null) {

@@ -22,8 +22,8 @@ export class InicioComponent implements OnInit {
   contacto: FormGroup;
   submitted = false;
 
-  siAdmin: Boolean = false;
-  editable: Boolean = false;
+  siAdmin = false;
+  editable = false;
 
   usuario: User = new User();
 
@@ -43,22 +43,20 @@ export class InicioComponent implements OnInit {
 
   ngOnInit(): void {
     //this.usuario = this.autenticado.getUsuario();
+    this.formularioVacio();
     this.user
       .getUsuario(this.autenticado.getUsuario().id)
       .subscribe((res: User) => {
-        //console.log(res);
         this.usuario = res;
-        /*console.log(
-          'this user: ' + JSON.stringify(this.usuario.objRole.roleName)
-        );*/
         this.siEsAdmin();
-        //console.log(this.usuario);
         this.formulario();
+        this.siEsAdmin();
+        this.listar();
+
       });
-    this.siEsAdmin();
-    this.formularioVacio();
-    this.listar();
-    this.cambiosCargo.customCargo.subscribe((mng) => (this.rol = mng));
+      this.cambiosCargo.customCargo.subscribe((mng) => {
+        this.rol = mng
+    });
   }
 
   //listar Cargos, dependencias y roles
@@ -67,6 +65,12 @@ export class InicioComponent implements OnInit {
     this.user.getRoles().subscribe((roles) => {
       this.roles = roles;
     });
+    //Lista de dependencias
+    this.positionService
+      .getDependences()
+      .subscribe((dependencias: Dependence[]) => {
+        return (this.dependencias = dependencias);
+      });
     //Lista de cargos
     this.positionService.getPositions().subscribe((cargos: Position[]) => {
       this.cargosDeUnaDependencia = cargos;
@@ -74,12 +78,6 @@ export class InicioComponent implements OnInit {
       this.onChange(this.contacto.controls.dependencia.value);
       return (this.cargos);
     });
-    //Lista de dependencias
-    this.positionService
-      .getDependences()
-      .subscribe((dependencias: Dependence[]) => {
-        return (this.dependencias = dependencias);
-      });
   }
 
   formulario() {
@@ -244,7 +242,8 @@ export class InicioComponent implements OnInit {
         console.error(err.error.errors);
         swal.fire(
           '¡Error!',
-          `No se pudo actualizar tus datos, por favor verifica los campos`,
+          `No se pudo actualizar tus datos, por favor verifica los campos,
+          especialmente la identifiación o correo que no existan en la aplicación`,
           'error'
         );
       }
@@ -270,6 +269,8 @@ export class InicioComponent implements OnInit {
       }
     }
     const considencia = this.cargosDeUnaDependencia.filter(cargoFiltro => cargoFiltro.positioName === cargo.positioName)
-    this.contacto.get('cargo').setValue(considencia[0].id);
+    if (considencia.length !== 0) {
+      this.contacto.get('cargo').setValue(considencia[0].id);
+    }
   }
 }

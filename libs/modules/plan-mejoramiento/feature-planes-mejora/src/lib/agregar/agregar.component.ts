@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { estadosPlan, Person, UserService } from '@unicauca/core';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
+  cambiarTextoAFecha,
   plan,
   PlanService,
   Proceso,
@@ -147,8 +148,6 @@ export class AgregarComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        console.log(res);
-
         this.dataSourceLiderProceso = new MatTableDataSource<any>(res);
         this.streamDatosLiderProceso$.next(res);
 
@@ -270,15 +269,17 @@ export class AgregarComponent implements OnInit {
         const arrayPropiedadesObjetoPlan = Object.getOwnPropertyNames(
           this.formularioPlan.getRawValue()
         );
+        // const fechaI = new Date(this.formularioPlan.get('fechaInicio').value);
+
         arrayPropiedadesObjetoPlan.forEach((element) => {
           if (element === 'objLiderProceso' || element === 'objLiderAuditor') {
             this.formularioPlan
-              .get(element)
-              .setValue([res.planMejoramiento[element].id]);
+            .get(element)
+            .setValue([res.planMejoramiento[element].id]);
           } else {
             this.formularioPlan
-              .get(element)
-              .setValue(res.planMejoramiento[element]);
+            .get(element)
+            .setValue(res.planMejoramiento[element]);
           }
         });
         this.formularioPlan
@@ -287,13 +288,15 @@ export class AgregarComponent implements OnInit {
             this.procesos.filter(
               (proceso) =>
                 res.planMejoramiento.proceso.idProceso === proceso.idProceso
-            )[0]
+                )[0]
           );
-        this.fechaActual = this.formularioPlan.get('fechaInicio').value;
+          this.fechaActual = this.formularioPlan.get('fechaInicio').value;
+          this.formularioPlan.get('fechaInicio').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaInicio').value));
+          this.formularioPlan.get('fechaFin').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaFin').value));
 
-        const objSeleccionadoAuditor = this.dataSourceLiderAuditor.data.find(
-          (item) => item.id == this.objLiderAuditor.value[0]
-        );
+          const objSeleccionadoAuditor = this.dataSourceLiderAuditor.data.find(
+            (item) => item.id == this.objLiderAuditor.value[0]
+            );
         this.selectionLiderAudior.clear();
         this.selectionLiderAudior.select(objSeleccionadoAuditor);
         this.validadorCheckAuditor = false;

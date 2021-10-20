@@ -31,6 +31,8 @@ export class HistorialActividadesComponent implements OnInit {
   actividades: Actividad[] = [];
   boolAjuntarEvidencia = false;
 
+  esAuditor = false;
+
   estadoButtons: EstadoButtons = {};
 
   columnas: Columna[] = [
@@ -50,13 +52,13 @@ export class HistorialActividadesComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private actividadesService: ActividadesService,
     private authService: AuthService,
+    private actividadesService: ActividadesService,
     private estadosComunService: EstadosComunService,
   ) {}
 
   ngOnInit(): void {
-    this.boolAjuntarEvidencia = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
     this.llenarBotones();
     this.estadosComunService.customAccion
       .pipe(takeUntil(this.unsubscribe$))
@@ -70,12 +72,11 @@ export class HistorialActividadesComponent implements OnInit {
   llenarBotones(){
     this.estadoButtons = {
       crear: false,
-      editar: true,
-      eliminar: true,
+      editar: !this.esAuditor,
+      eliminar: !this.esAuditor,
       upload: false,
       visualizar: true,
       seleccionar: false,
-      adjuntarEvidencia: this.boolAjuntarEvidencia
     };
   }
 

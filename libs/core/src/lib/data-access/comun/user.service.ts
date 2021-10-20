@@ -45,9 +45,6 @@ export class UserService {
       })
       .pipe(
         catchError((e) => {
-          if (e.status == 400) {
-            return throwError(e);
-          }
           console.log(e.error.mensaje);
           swal.fire('Error al crear el usuario', e.error.mensaje, 'error');
           return throwError(e);
@@ -66,8 +63,6 @@ export class UserService {
             return throwError(e);
           }
           const separacion = e.error.mensajeDuplicacion.split('\'');
-          console.log(separacion);
-
           console.error(e.error.mensaje);
           swal.fire(
             e.error.mensaje,
@@ -89,6 +84,7 @@ export class UserService {
           console.error(e.error.mensaje);
           swal.fire(
             e.error.mensaje,
+            'El usuario tiene asociado un plan de mejoramiento',
             'error'
           );
           return throwError(e);

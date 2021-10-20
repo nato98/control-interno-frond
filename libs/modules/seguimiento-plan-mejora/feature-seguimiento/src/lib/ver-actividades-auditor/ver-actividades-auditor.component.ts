@@ -38,7 +38,7 @@ export class VerActividadesAuditorComponent implements OnInit {
 
   public columnas: Columna[] = [
     { nombreCelda: 'nombreEvidencia', nombreCeldaHeader: 'Nombre de la evidencia' },
-    { nombreCelda: 'linkDescarga', nombreCeldaHeader: 'Link de descarga' },
+    // { nombreCelda: 'linkDescarga', nombreCeldaHeader: 'Link de descarga' },
     { nombreCelda: 'estadoEvaluacion', nombreCeldaHeader: 'Estado' },
     { nombreCelda: 'observaciones', nombreCeldaHeader: 'Observaciones del auditor' },
     {

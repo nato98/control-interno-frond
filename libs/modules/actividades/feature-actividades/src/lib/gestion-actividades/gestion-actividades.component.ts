@@ -18,6 +18,7 @@ import { AccionesService } from '@unicauca/modules/acciones/data-access';
 import {
   Accion,
   Actividad,
+  cambiarTextoAFecha,
   Causa,
   TipoControl,
   TipoControlService,
@@ -61,6 +62,7 @@ export class GestionActividadesComponent implements OnInit {
   contador = 0;
 
   unsubscribe$ = new Subject();
+  streamDatosAuditor$ = new BehaviorSubject<any[]>([]);
 
   activarFiltroItems = true;
   estadoButtons: EstadoButtons = {
@@ -72,16 +74,16 @@ export class GestionActividadesComponent implements OnInit {
     seleccionar: true,
   };
 
-  columnas: Columna[] = [
-    { nombreCelda: 'nombre', nombreCeldaHeader: 'Nombre' },
-    { nombreCelda: 'cargo', nombreCeldaHeader: 'Cargo' },
-    {
-      nombreCelda: 'acciones',
-      nombreCeldaHeader: 'Acciones',
-      tipo: TipoColumna.ACCIONES,
-    },
-  ];
-
+ /**Array de titulos de columnas */
+ columnas: Columna[] = [
+  {
+    nombreCelda: 'opciones',
+    nombreCeldaHeader: 'Opciones',
+    tipo: TipoColumna.SELECT,
+  },
+  { nombreCelda: 'nombre', nombreCeldaHeader: 'Nombre' },
+  { nombreCelda: 'cargo', nombreCeldaHeader: 'Cargo' },
+];
   streamDatos$ = new BehaviorSubject<any[]>([]);
 
   selection = new SelectionModel<any>(true, []);
@@ -91,6 +93,7 @@ export class GestionActividadesComponent implements OnInit {
   public listadoPeriocidad = estadosPeriodicidad;
   public listadoRecursos = estadosRecursos;
 
+  public validadorCheckAuditor = true;
   public responsables: Person[] = [];
 
   public listaCheck: EstadoCheck[] = [
@@ -143,6 +146,7 @@ export class GestionActividadesComponent implements OnInit {
       )
       .subscribe((datosResponsable) => {
         this.dataSource = new MatTableDataSource<any>(datosResponsable);
+        this.streamDatosAuditor$.next(datosResponsable);
         this.dataSource.paginator = this.paginator;
       });
   }
@@ -159,8 +163,9 @@ export class GestionActividadesComponent implements OnInit {
       )
       .subscribe((objAccion: any) => {
         this.accion = objAccion.accion;
-        this.fechaInicio = this.accion.objCausa.objHallazgo.objPlan.fechaInicio;
-        this.fechaFinal = this.accion.objCausa.objHallazgo.objPlan.fechaFin;
+        this.fechaInicio = cambiarTextoAFecha(this.accion.objCausa.objHallazgo.objPlan.fechaInicio);
+        this.fechaFinal = cambiarTextoAFecha(this.accion.objCausa.objHallazgo.objPlan.fechaFin);
+        this.streamDatosAuditor$.next(this.dataSource.data);
         if (this.idActividad) {
           this.modeEdicion();
           this.modoEdicionActivo = true;
@@ -189,7 +194,6 @@ export class GestionActividadesComponent implements OnInit {
       descripcionActividad: [null],
       objAccion: [null],
       objResponsable: [null],
-      listaEvidencias: [null],
     });
   }
 
@@ -206,11 +210,22 @@ export class GestionActividadesComponent implements OnInit {
       .subscribe((respuestaBack: any) => {
         this.actividad = respuestaBack.actividad;
         const cadena: string = respuestaBack.actividad.descripcionActividad;
-       this.contador = cadena.length;
+       this.contador = (cadena ? cadena.length : 0);
         this.formularioActividad.setValue(respuestaBack.actividad);
+        this.formularioActividad.get('fechaEjecucion').setValue(cambiarTextoAFecha(this.formularioActividad.get('fechaEjecucion').value));
+        if (respuestaBack.actividad.fechaSeguimiento) {
+          this.formularioActividad.get('fechaSeguimiento').setValue
+          (cambiarTextoAFecha(respuestaBack.actividad.fechaSeguimiento));
+        }
+        if (respuestaBack.actividad.fechaTerminacion) {
+          this.formularioActividad.get('fechaTerminacion').setValue
+          (cambiarTextoAFecha(respuestaBack.actividad.fechaTerminacion));
+        }
         this.fechaActual = this.formularioActividad.get('fechaEjecucion').value;
         const objSeleccionado = this.dataSource.data.find(item => item.id === this.objResponsable.value.id)
-        this.selection.select(objSeleccionado)
+        this.selection.select(objSeleccionado);
+        this.validadorCheckAuditor = false;
+        this.streamDatosAuditor$.next(this.dataSource.data);
         this.dataSource = new MatTableDataSource<any>(this.dataSource.data);
       });
     if (localStorage.getItem('visualizar') === 'true') {
@@ -225,7 +240,7 @@ export class GestionActividadesComponent implements OnInit {
     this.modoEdicionActivo ? this.onEditar() : this.onGuardar();
   }
   public onEditar(): void {
-    if (this.formularioActividad.invalid) {
+    if (this.formularioActividad.invalid || this.validadorCheckAuditor) {
       return;
     }
     // this.recurso.setValue(
@@ -253,7 +268,7 @@ export class GestionActividadesComponent implements OnInit {
       });
   }
   public onGuardar(): void {
-    if (this.formularioActividad.invalid) {
+    if (this.formularioActividad.invalid || this.validadorCheckAuditor) {
       return;
     }
     // this.recurso.setValue(
@@ -332,5 +347,16 @@ export class GestionActividadesComponent implements OnInit {
   onSeleccionarUnicaFila(row?) {
     this.selection.clear();
     this.selection.select(row);
+  }
+   /** Selects all rows if they are not all selected; otherwise clear selection. */
+   onSeleccionarUnicaFilaLiderAuditor(row?) {
+    if (this.selection.selected[0] === row) {
+      this.selection.clear();
+      this.validadorCheckAuditor = true;
+    }else{
+      this.selection.clear();
+      this.selection.select(row);
+      this.validadorCheckAuditor = false;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../auth/src/lib/data-access/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -27,13 +28,9 @@ export class HistorialAccionesComponent implements OnInit {
   causa: Causa;
   acciones: Accion[] = [];
 
-  estadoButtons: EstadoButtons = {
-    crear: true,
-    editar: true,
-    eliminar: true,
-    upload: false,
-    visualizar: true,
-  };
+  esAuditor = false;
+
+  estadoButtons: EstadoButtons = {};
 
   columnas: Columna[] = [
     { nombreCelda: 'posicion', nombreCeldaHeader: 'Posición' },
@@ -51,11 +48,14 @@ export class HistorialAccionesComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private accionesService: AccionesService,
     private estadosComunService: EstadosComunService,
   ) {}
 
   ngOnInit(): void {
+    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.llenarBotones();
     this.estadosComunService.customCausa
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((msg) => (this.causa = msg));
@@ -63,6 +63,17 @@ export class HistorialAccionesComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe();
     this.listarAcciones();
+  }
+
+  llenarBotones(){
+    this.estadoButtons = {
+      crear: true,
+      editar: !this.esAuditor,
+      eliminar: !this.esAuditor,
+      upload: false,
+      visualizar: true,
+      seleccionar: false,
+    };
   }
 
   private listarAcciones(): void {
