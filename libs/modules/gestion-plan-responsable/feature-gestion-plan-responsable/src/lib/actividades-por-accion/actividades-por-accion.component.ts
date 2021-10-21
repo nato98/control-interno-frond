@@ -29,11 +29,24 @@ export class ActividadesPorAccionComponent implements OnInit {
 
   public titulo = 'Evidencias de la actividad';
 
+  estadoButtons: EstadoButtons = {
+    crear: false,
+    editar: true,
+    eliminar: false,
+    upload: false,
+    visualizar: false,
+  };
+
   public columnas: Columna[] = [
     { nombreCelda: 'nombreEvidencia', nombreCeldaHeader: 'Nombre de la evidencia' },
-    // { nombreCelda: 'linkDescarga', nombreCeldaHeader: 'Link de descarga' },
+    { nombreCelda: 'linkDescarga', nombreCeldaHeader: 'Link de descarga' },
     { nombreCelda: 'estadoEvaluacion', nombreCeldaHeader: 'Estado' },
     { nombreCelda: 'observaciones', nombreCeldaHeader: 'Observaciones del auditor' },
+    {
+      nombreCelda: 'acciones',
+      nombreCeldaHeader: 'Acciones',
+      tipo: TipoColumna.ACCIONES,
+    },
   ];
 
   public streamDatos$ = new BehaviorSubject<any[]>([]);
@@ -99,7 +112,22 @@ export class ActividadesPorAccionComponent implements OnInit {
     const dialogRef = this.dialog.open(SubirEvidenciaComponent, {
       disableClose: true,
       width: '70%',
-      data: this.actividadSeleccionada,
+      data: {
+        soporte: this.actividadSeleccionada,
+        evidenciaEditar: null
+      },
+    });
+    dialogRef.afterClosed().subscribe((x) => this.actualizarSoporte());
+  }
+
+  public onEditar($event): void {
+    const dialogRef = this.dialog.open(SubirEvidenciaComponent, {
+      disableClose: true,
+      width: '70%',
+      data: {
+        soporte: this.actividadSeleccionada,
+        evidenciaEditar: $event
+      },
     });
     dialogRef.afterClosed().subscribe((x) => this.actualizarSoporte());
   }

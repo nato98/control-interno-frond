@@ -47,7 +47,7 @@
             <mat-sidenav-content>
                 <div fxLayoutAlign="end end"><button mat-raised-button color="primary" type="button" (click)="click()">{{opened ? 'Extraer' : 'Abrir'}} actividades</button></div>
                 <p>
-                    <unicauca-tabla [inTituloTabla]="titulo" [inColumnas]="columnas" [inStreamDatos$]="streamDatos$" [inActivarFiltroItems]="activarFiltroItems" inPlaceholderFiltroItems="Filtrar">
+                    <unicauca-tabla [inTituloTabla]="titulo" [inColumnas]="columnas" [inStreamDatos$]="streamDatos$" [inActivarBtns]="estadoButtons" [inActivarFiltroItems]="activarFiltroItems" inPlaceholderFiltroItems="Filtrar" (outEditar$)="onEditar($event)">
                     </unicauca-tabla>
                 </p>
                 <div fxLayoutAlign="end end">

@@ -3,5 +3,6 @@ import { Actividad } from './../../../../../plan-mejoramiento/data-access/src/li
 export interface Evidencia{
   id: number;
   evidencia: string;
+  linkEvidencia: string;
   objActividad: Actividad;
 }

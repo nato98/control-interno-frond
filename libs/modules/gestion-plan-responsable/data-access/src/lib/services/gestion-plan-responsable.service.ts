@@ -21,6 +21,9 @@ export class GestionPlanResponsableService {
   }
   public guardarEvidencia(evidencia: Evidencia): Observable<Evidencia>{
     return this.http.post<Evidencia>(this.urlEndPoint+'save', evidencia);
+  }
 
+  public updateEvidencia(evidencia: Evidencia): Observable<Evidencia>{
+    return this.http.put<Evidencia>(this.urlEndPoint+'update', evidencia);
   }
 }

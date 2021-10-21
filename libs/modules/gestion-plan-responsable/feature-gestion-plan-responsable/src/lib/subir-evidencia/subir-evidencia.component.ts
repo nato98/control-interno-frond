@@ -12,24 +12,30 @@ import { EvaluacionService } from 'libs/modules/seguimiento-plan-mejora/data-acc
 @Component({
   selector: 'unicauca-subir-evidencia',
   templateUrl: './subir-evidencia.component.html',
-  styleUrls: ['./subir-evidencia.component.scss']
+  styleUrls: ['./subir-evidencia.component.scss'],
 })
 export class SubirEvidenciaComponent implements OnInit {
-
   public nombreEvidencia = '';
+  public linkEvidencia = '';
+  public esEdicion = false;
+  private idEvidencia = null;
   private unsubscribe$ = new Subject();
 
   constructor(
     public dialogRef: MatDialogRef<SubirEvidenciaComponent>,
     @Inject(MAT_DIALOG_DATA) public actividadSeleccionada: any,
     private gestionPlanResponsableService: GestionPlanResponsableService,
-    private evaluacionService: EvaluacionService,
-  ) { }
+    private evaluacionService: EvaluacionService
+  ) {}
 
   ngOnInit(): void {
+    if (this.actividadSeleccionada.evidenciaEditar) {
+      this.esEdicion = true;
+      this.onEditar();
+    }
   }
 
-  public onCancelar(): void{
+  public onCancelar(): void {
     Swal.fire({
       title: `Advertencia`,
       text: '¿Desear cancelar la acción?',
@@ -46,32 +52,48 @@ export class SubirEvidenciaComponent implements OnInit {
     });
   }
 
-  public onGuardar(): void{
-    const evidencia: Evidencia = {
-      id: null,
-      evidencia: this.nombreEvidencia,
-      objActividad: this.actividadSeleccionada
+  public onGuardar(): void {
+    if (this.nombreEvidencia === '' || this.linkEvidencia === '') {
+      return;
     }
-    this.gestionPlanResponsableService.guardarEvidencia(evidencia)
-    .pipe(
-      takeUntil(this.unsubscribe$)
-    )
-    .subscribe(res => {
+    const evidencia: Evidencia = {
+      id: this.idEvidencia,
+      evidencia: this.nombreEvidencia,
+      linkEvidencia: this.linkEvidencia,
+      objActividad: this.actividadSeleccionada.soporte,
+    };
+    if (this.esEdicion) {
+      this.gestionPlanResponsableService
+        .updateEvidencia(evidencia)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => this.dialogRef.close());
+    } else {
+      this.gestionPlanResponsableService
+        .guardarEvidencia(evidencia)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((res) => {
+          res.linkEvidencia = this.linkEvidencia;
 
-      const evaluacion: Evaluacion = {
-        id: null,
-        estado: null,
-        fecha_evaluacion: null,
-        observacion: null,
-        objEvidencia: res,
-        objPersona: this.actividadSeleccionada.objAccion.objCausa.objHallazgo.objPlan.objLiderAuditor
-      }
-      this.evaluacionService.guardarEvaluacion(evaluacion)
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe(() => this.dialogRef.close())
-    })
+          const evaluacion: Evaluacion = {
+            id: null,
+            estado: null,
+            fecha_evaluacion: null,
+            observacion: null,
+            objEvidencia: res,
+            objPersona: this.actividadSeleccionada.soporte.objAccion.objCausa
+              .objHallazgo.objPlan.objLiderAuditor,
+          };
+          this.evaluacionService
+            .guardarEvaluacion(evaluacion)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(() => this.dialogRef.close());
+        });
+    }
   }
 
+  private onEditar() {
+    this.nombreEvidencia = this.actividadSeleccionada.evidenciaEditar.nombreEvidencia;
+    this.linkEvidencia = this.actividadSeleccionada.evidenciaEditar.linkDescarga;
+    this.idEvidencia = this.actividadSeleccionada.evidenciaEditar.idEvidencia;
+  }
 }
