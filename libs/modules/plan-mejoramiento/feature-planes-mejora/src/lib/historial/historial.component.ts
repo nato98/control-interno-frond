@@ -32,6 +32,7 @@ export class HistorialComponent implements OnInit {
   unsubscribe$ = new Subject();
 
   esAuditor = false;
+  hintAgregarOVerAuditor = ''
   estadoButtons: EstadoButtons = {};
 
   /**Array de titulos de columnas */
@@ -71,6 +72,7 @@ export class HistorialComponent implements OnInit {
     this.correo = this.authService.getUsuario().objPerson.email;
     this.rol = this.authService.getUsuario().objRole[0];
     this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.hintAgregarOVerAuditor = (this.esAuditor ? 'Ver' : 'Agregar');
     this.llenarBotones();
 
     this.listar();

@@ -28,7 +28,7 @@
                         </mat-label>
                     </div>
                 </div>
-                <div>
+                <div *ngIf="!this.esAuditor">
                     <button mat-raised-button color="primary" (click)="agregar()">
           Agregar actividad
         </button>

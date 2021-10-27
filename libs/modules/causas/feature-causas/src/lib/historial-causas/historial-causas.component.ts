@@ -31,6 +31,7 @@ export class HistorialCausasComponent implements OnInit {
   causas: Causa[]= [];
 
   esAuditor = false;
+  hintAgregarOVerAuditor = '';
 
   estadoButtons: EstadoButtons = {};
 
@@ -55,6 +56,7 @@ export class HistorialCausasComponent implements OnInit {
 
   ngOnInit(): void {
     this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.hintAgregarOVerAuditor = (this.esAuditor ? 'Ver' : 'Agregar');
     this.llenarBotones();
     this.estadosComunService.customHallazgo
       .pipe(takeUntil(this.unsubscribe$))

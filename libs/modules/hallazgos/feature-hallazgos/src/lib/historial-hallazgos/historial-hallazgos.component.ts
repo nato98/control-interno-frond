@@ -32,6 +32,7 @@ export class HistorialHallazgosComponent implements OnInit, OnChanges {
   unsubscribe$ = new Subject();
 
   esAuditor = false;
+  hintAgregarOVerAuditor = '';
 
   estadoButtons: EstadoButtons = {};
 
@@ -57,6 +58,7 @@ export class HistorialHallazgosComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.hintAgregarOVerAuditor = (this.esAuditor ? 'Ver' : 'Agregar');
     this.llenarBotones();
     //this.listarHallazgos();
     this.estadosComunService.customPlan

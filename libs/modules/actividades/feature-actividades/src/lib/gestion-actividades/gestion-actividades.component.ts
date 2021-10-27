@@ -191,7 +191,7 @@ export class GestionActividadesComponent implements OnInit {
       fechaEjecucion: [null, Validators.required],
       fechaSeguimiento: [null],
       fechaTerminacion: [null],
-      descripcionActividad: [null],
+      descripcionActividad: [null, Validators.required],
       objAccion: [null],
       objResponsable: [null],
     });

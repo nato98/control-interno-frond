@@ -48,10 +48,10 @@
                     </th>
                     <td mat-cell *matCellDef="let element">
                         <div fxlayout="row" fxLayoutAing="space-around center">
-                            <button *ngIf="inActivarBtns.crear" (click)="onCrearHallazgo(element)" class="btn-agregar-hallazgo" mat-icon-button matTooltip="Agregar {{ inNombreAgregar }}" [matTooltipPosition]="'above'">
+                            <button *ngIf="inActivarBtns.crear" (click)="onCrearHallazgo(element)" class="btn-agregar-hallazgo" mat-icon-button matTooltip="{{inNombreAgregarOVerAuditor}} {{ inNombreAgregar }}" [matTooltipPosition]="'above'">
                 <mat-icon>add</mat-icon>
               </button>
-                            <button *ngIf="inActivarBtns.visualizar" (click)="onVisualizarHallazgo(element)" class="btn-ver-plan" mat-icon-button matTooltip="Ver" [matTooltipPosition]="'above'">
+                            <button *ngIf="inActivarBtns.visualizar" (click)="onVisualizarHallazgo(element)" class="btn-ver-plan" mat-icon-button matTooltip="Ver {{inVerEvidencia}}" [matTooltipPosition]="'above'">
                 <mat-icon>remove_red_eye</mat-icon>
               </button>
                             <button *ngIf="inActivarBtns.editar" (click)="onEditarHallazgo(element)" class="btn-editar-plan" mat-icon-button matTooltip="Editar" [matTooltipPosition]="'above'">

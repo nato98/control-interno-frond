@@ -24,6 +24,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class TablaComponent implements OnInit, OnDestroy {
   @Input() inTituloTabla: string;
   @Input() inNombreAgregar = '';
+  @Input() inNombreAgregarOVerAuditor = 'Agregar';
+  @Input() inVerEvidencia = '';
   @Input() inColumnas: Columna[];
   @Input() inStreamDatos$: BehaviorSubject<any[]>;
   @Input() inActivarFiltroItems = false;

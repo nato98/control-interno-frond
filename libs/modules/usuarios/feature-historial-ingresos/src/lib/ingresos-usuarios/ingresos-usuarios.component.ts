@@ -22,6 +22,7 @@ import { Columna, TipoColumna } from '@unicauca/shared/components/tabla';
 })
 export class IngresosUsuariosComponent implements OnInit {
   titulo = '';
+  activarFiltroItems = true;
 
   streamDatos$ = new BehaviorSubject<any[]>([]);
 

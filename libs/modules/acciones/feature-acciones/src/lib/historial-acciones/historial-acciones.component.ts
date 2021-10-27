@@ -29,6 +29,7 @@ export class HistorialAccionesComponent implements OnInit {
   acciones: Accion[] = [];
 
   esAuditor = false;
+  hintAgregarOVerAuditor = '';
 
   estadoButtons: EstadoButtons = {};
 
@@ -55,6 +56,7 @@ export class HistorialAccionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.hintAgregarOVerAuditor = (this.esAuditor ? 'Ver' : 'Agregar');
     this.llenarBotones();
     this.estadosComunService.customCausa
       .pipe(takeUntil(this.unsubscribe$))

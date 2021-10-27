@@ -22,15 +22,15 @@
                         </mat-label>
                     </div>
                 </div>
-                <div>
+                <div *ngIf="!this.esAuditor">
                     <button mat-raised-button color="primary" (click)="agregar()">
             Agregar acción
           </button>
                 </div>
             </div>
             <div fxFill class="paddingx">
-                <unicauca-tabla [inTituloTabla]="titulo" [inNombreAgregar]="'una actividad'" [inColumnas]="columnas" [inActivarBtns]="estadoButtons" [inStreamDatos$]="streamDatos$" [inActivarFiltroItems]="activarFiltroItems" inPlaceholderFiltroItems="Filtrar acción"
-                    (outEliminar$)="onDeleteAccion($event)" (outEditar$)="onEditarAccion($event)" (outVisualizar$)="onVisualizarAccion($event)" (outCrear$)="onCrearActividad($event)">
+                <unicauca-tabla [inTituloTabla]="titulo" [inNombreAgregar]="'una actividad'" [inNombreAgregarOVerAuditor]="hintAgregarOVerAuditor" [inColumnas]="columnas" [inActivarBtns]="estadoButtons" [inStreamDatos$]="streamDatos$" [inActivarFiltroItems]="activarFiltroItems"
+                    inPlaceholderFiltroItems="Filtrar acción" (outEliminar$)="onDeleteAccion($event)" (outEditar$)="onEditarAccion($event)" (outVisualizar$)="onVisualizarAccion($event)" (outCrear$)="onCrearActividad($event)">
                 </unicauca-tabla>
             </div>
         </div>
