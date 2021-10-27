@@ -20,7 +20,7 @@ import { AuthService } from '../data-access/auth/auth.service';
 })
 export class FeatureLoginComponent implements OnInit {
   public loginForm: FormGroup;
-  public submitted: boolean = false;
+  public submitted = false;
   public error: { code: number; message: string } = null;
 
   public usuario: string;
@@ -86,6 +86,10 @@ export class FeatureLoginComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  rutaOlvidoContra(){
+    this.router.navigate(['/auth/olvido-password']);
   }
 
   login() {
