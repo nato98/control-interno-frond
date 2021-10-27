@@ -22,7 +22,7 @@ import { FeatureRecuperacionContrasenaComponent } from './feature-recuperacion-c
 
 const routes: Routes = [
   {
-    path: 'recuperar-contrasena',
+    path: 'olvido-password',
     component: FeatureRecuperacionContrasenaComponent,
   },
   {
