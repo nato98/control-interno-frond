@@ -8,6 +8,11 @@ import {
 } from '@unicauca/layout';
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/auth/login',
+    pathMatch: 'full',
+  },
+  {
     path: 'home',
     component: LayoutComponent,
     children: [
@@ -83,11 +88,6 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () =>
       import('@unicauca/auth').then((module) => module.AuthModule),
-  },
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: 'auth',
   },
 ];
 

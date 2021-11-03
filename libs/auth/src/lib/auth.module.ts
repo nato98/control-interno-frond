@@ -26,7 +26,7 @@ const routes: Routes = [
     component: FeatureRecuperacionContrasenaComponent,
   },
   {
-    path: '',
+    path: 'login',
     component: FeatureLoginComponent,
   },
 ];
