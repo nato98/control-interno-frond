@@ -146,7 +146,7 @@ const routes: Routes = [
             component: GestionActividadesComponent,
           },
           {
-            path: 'gestionActividades/:idAccion/:idActividad',
+            path: 'gestionActividades/:idAccion/:idActividad/:esAuditor',
             component: GestionActividadesComponent,
           },
         ],

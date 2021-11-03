@@ -37,7 +37,7 @@ export class HistorialActividadesComponent implements OnInit {
 
   columnas: Columna[] = [
     { nombreCelda: 'posicion', nombreCeldaHeader: 'Posición' },
-    { nombreCelda: 'indicador', nombreCeldaHeader: 'Indicación' },
+    { nombreCelda: 'indicador', nombreCeldaHeader: 'Indicador' },
     { nombreCelda: 'periodicidad', nombreCeldaHeader: 'Periodicidad' },
     { nombreCelda: 'recurso', nombreCeldaHeader: 'Recursos' },
     { nombreCelda: 'objResponsable', nombreCeldaHeader: 'Responsable' },
@@ -161,7 +161,7 @@ export class HistorialActividadesComponent implements OnInit {
     if (this.accion !== null) {
       this.router.navigate([
         '/home/planes-mejora/historial/actividades/gestionActividades',
-        this.accion.idAccion, $actividad.id
+        this.accion.idAccion, $actividad.id, this.esAuditor
       ]);
       localStorage.setItem('visualizar', 'false');
       this.estadosComunService.changeSelectedIndex(4);
@@ -171,7 +171,7 @@ export class HistorialActividadesComponent implements OnInit {
     if (this.accion !== null) {
       this.router.navigate([
         '/home/planes-mejora/historial/actividades/gestionActividades',
-        this.accion.idAccion, $actividad.id
+        this.accion.idAccion, $actividad.id, this.esAuditor
       ]);
       localStorage.setItem('visualizar', 'true');
       this.estadosComunService.changeSelectedIndex(4);

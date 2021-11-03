@@ -58,6 +58,7 @@ export class GestionActividadesComponent implements OnInit {
 
   mostrarBtnVolver = false;
   modoEdicionActivo = false;
+  esAuditor = false;
 
   contador = 0;
 
@@ -158,6 +159,9 @@ export class GestionActividadesComponent implements OnInit {
         switchMap((respuestaURL) => {
           this.idAccion = parseInt(respuestaURL.get('idAccion'));
           this.idActividad = parseInt(respuestaURL.get('idActividad'));
+          this.esAuditor = Boolean(respuestaURL.get('esAuditor'));
+          console.log(this.esAuditor);
+
           return this.accionesService.getAccionPorId(this.idAccion);
         })
       )
