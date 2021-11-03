@@ -88,6 +88,10 @@ export class FeatureLoginComponent implements OnInit {
     }
   }
 
+  rutaOlvidoContra(){
+    this.router.navigate(['/auth/olvido-password']);
+  }
+
   login() {
     this.authService.obtenerTokenAcceso(this.objUsuario).subscribe(
       (response) => {
