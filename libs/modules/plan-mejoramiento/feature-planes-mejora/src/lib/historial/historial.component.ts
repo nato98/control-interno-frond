@@ -32,6 +32,10 @@ export class HistorialComponent implements OnInit {
   unsubscribe$ = new Subject();
 
   esAuditor = false;
+  esLiderProceso = false;
+  esAdministrado = false;
+  idPersona: number;
+
   hintAgregarOVerAuditor = ''
   estadoButtons: EstadoButtons = {};
 
@@ -72,6 +76,9 @@ export class HistorialComponent implements OnInit {
     this.correo = this.authService.getUsuario().objPerson.email;
     this.rol = this.authService.getUsuario().objRole[0];
     this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.esLiderProceso = (this.authService.getUsuario().objRole[0] === 'ROLE_liderDeProceso');
+    this.esAdministrado = (this.authService.getUsuario().objRole[0] === 'ROLE_administrador');
+    this.idPersona = this.authService.getUsuario().objPerson.id;
     this.hintAgregarOVerAuditor = (this.esAuditor ? 'Ver' : 'Agregar');
     this.llenarBotones();
 
@@ -86,7 +93,7 @@ export class HistorialComponent implements OnInit {
   llenarBotones(){
     this.estadoButtons = {
       crear: true,
-      editar: !this.esAuditor,
+      editar: true,
       eliminar: !this.esAuditor,
       upload: false,
       visualizar: true,
@@ -95,19 +102,51 @@ export class HistorialComponent implements OnInit {
   }
 
   listar() {
-    this.servicioPlan.getPlanes().subscribe((res: any) => {
-      this.planes = res.planes;
-      const listaDatosPlanes = res.planes.map((obj) => ({
-        identificadorPlan: obj.idPlanMejoramiento,
-        nombrePlan: obj.nombre,
-        procesoResponsable: obj?.proceso?.nombreProceso,
-        estado: obj.estado,
-      }));
-      this.streamDatos$.next(listaDatosPlanes);
-    },
-    () => {
-      this.streamDatos$.next([]);
-    });
+    if (this.esAuditor) {
+      this.servicioPlan.getPlanesPorRol(this.idPersona, 'ROLE_auditor').subscribe((res: any) => {
+        this.planes = res.planes;
+        const listaDatosPlanes = res.planes.map((obj) => ({
+          identificadorPlan: obj.idPlanMejoramiento,
+          nombrePlan: obj.nombre,
+          procesoResponsable: obj?.proceso?.nombreProceso,
+          estado: obj.estado,
+        }));
+        this.streamDatos$.next(listaDatosPlanes);
+      },
+      () => {
+        this.streamDatos$.next([]);
+      });
+    }
+    if (this.esLiderProceso) {
+      this.servicioPlan.getPlanesPorRol(this.idPersona, 'ROLE_liderDeProceso').subscribe((res: any) => {
+        this.planes = res.planes;
+        const listaDatosPlanes = res.planes.map((obj) => ({
+          identificadorPlan: obj.idPlanMejoramiento,
+          nombrePlan: obj.nombre,
+          procesoResponsable: obj?.proceso?.nombreProceso,
+          estado: obj.estado,
+        }));
+        this.streamDatos$.next(listaDatosPlanes);
+      },
+      () => {
+        this.streamDatos$.next([]);
+      });
+    }
+    if (this.esAdministrado) {
+      this.servicioPlan.getPlanes().subscribe((res: any) => {
+        this.planes = res.planes;
+        const listaDatosPlanes = res.planes.map((obj) => ({
+          identificadorPlan: obj.idPlanMejoramiento,
+          nombrePlan: obj.nombre,
+          procesoResponsable: obj?.proceso?.nombreProceso,
+          estado: obj.estado,
+        }));
+        this.streamDatos$.next(listaDatosPlanes);
+      },
+      () => {
+        this.streamDatos$.next([]);
+      });
+    }
   }
 
   agregar() {

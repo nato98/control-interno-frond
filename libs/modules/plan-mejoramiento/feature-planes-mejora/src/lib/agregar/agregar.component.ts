@@ -18,6 +18,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Columna, TipoColumna } from '@unicauca/shared/components/tabla';
+import { AuthService } from '@unicauca/auth';
 
 @Component({
   selector: 'unicauca-agregar',
@@ -48,6 +49,10 @@ export class AgregarComponent implements OnInit {
   public procesos: Proceso[];
   mostrarBtnVolver: boolean;
   titulo: string;
+
+  esAuditor = false;
+  esLiderProceso = false;
+  esAdministrado = false;
 
   public listadoEstado = estadosPlan;
   unsubscribe$ = new Subject();
@@ -84,16 +89,21 @@ export class AgregarComponent implements OnInit {
     private service: PlanService,
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private servicioPlan: PlanService,
     private procesoService: ProcesoService,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.esLiderProceso = (this.authService.getUsuario().objRole[0] === 'ROLE_liderDeProceso');
+    this.esAdministrado = (this.authService.getUsuario().objRole[0] === 'ROLE_administrador');
     this.crearFormulario();
     this.validarAnoYMedioAPartirFechaActual();
     this.cargarCatalogos();
     this.verificarEstadoComponente();
+    this.colocarIneditablesCampos();
   }
 
   private cargarCatalogos(): void {
@@ -170,6 +180,20 @@ export class AgregarComponent implements OnInit {
     });
   }
 
+  private colocarIneditablesCampos(){
+    if (this.esAuditor) {
+      this.formularioPlan.get('nombre').disable();
+      this.formularioPlan.get('fechaInicio').disable();
+      this.formularioPlan.get('fechaFin').disable();
+      this.formularioPlan.get('proceso').disable();
+      this.formularioPlan.get('prorrogado').disable();
+    }
+    if (this.esLiderProceso) {
+      this.formularioPlan.get('estado').disable();
+      this.formularioPlan.get('fechaSuscripcion').disable();
+    }
+  }
+
   private verificarEstadoComponente() {
     this.mostrarBtnVolver = false;
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -197,6 +221,7 @@ export class AgregarComponent implements OnInit {
       estado: [null],
       fechaFin: [null],
       fechaInicio: [null],
+      fechaSuscripcion: [null],
       idPlanMejoramiento: [{ value: null, disabled: true }],
       listaHallazgos: [null],
       nombre: [null, Validators.required],
@@ -293,6 +318,9 @@ export class AgregarComponent implements OnInit {
           this.fechaActual = this.formularioPlan.get('fechaInicio').value;
           this.formularioPlan.get('fechaInicio').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaInicio').value));
           this.formularioPlan.get('fechaFin').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaFin').value));
+          if (this.formularioPlan.get('fechaSuscripcion').value) {
+            this.formularioPlan.get('fechaSuscripcion').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaSuscripcion').value));
+          }
 
           const objSeleccionadoAuditor = this.dataSourceLiderAuditor.data.find(
             (item) => item.id == this.objLiderAuditor.value[0]

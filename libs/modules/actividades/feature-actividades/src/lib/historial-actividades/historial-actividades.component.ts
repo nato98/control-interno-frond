@@ -72,7 +72,7 @@ export class HistorialActividadesComponent implements OnInit {
   llenarBotones(){
     this.estadoButtons = {
       crear: false,
-      editar: !this.esAuditor,
+      editar: true,
       eliminar: !this.esAuditor,
       upload: false,
       visualizar: true,

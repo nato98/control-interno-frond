@@ -80,21 +80,21 @@ export class ChecklistDatabase {
     this.modoEdicion();
   }
   modoEdicion() {
-    this.servicioPlan
-      .getResumenPlan(this.codeUrl)
-      .subscribe((res: ResumenPlan[]) => {
+    this.servicioPlan.getResumenPlan(this.codeUrl).subscribe(
+      (res: ResumenPlan[]) => {
         const respuesta = this.arreglarResumenPlan(res);
         const data = this.buildFileTree(respuesta, 0);
         this.dataChange.next(data);
-      }, err => {
+      },
+      (err) => {
         if (err.status === 404) {
           this.dataChange.next([]);
         }
-      });
+      }
+    );
   }
 
   private fnActividad(listaObjs: any[]) {
-
     const objeto = Object.assign({}, listaObjs);
     const objs = this.getIdsNoRepetidosPorObjeto(objeto);
     const listaIDs = Object.keys(objs).map(Number);
@@ -110,64 +110,65 @@ export class ChecklistDatabase {
     }));
     console.log(lis);
 
-    return lis
+    return lis;
   }
 
   private fn(listaObjs: any[]) {
-    const objeto = Object.assign({}, listaObjs)
-    const objs = this.getIdsNoRepetidosPorObjeto(objeto)
+    const objeto = Object.assign({}, listaObjs);
+    const objs = this.getIdsNoRepetidosPorObjeto(objeto);
     const listaIDs = Object.keys(objs).map(Number);
-    listaIDs.map(id => ({
+    listaIDs.map((id) => ({
       ...objs[id],
-      [this.getNombreKeyObjeto(objeto)]: Object
-      .values(objeto)
-      .filter(obj => obj[this.getNombreIdPorObjeto(obj)] === id)
-      .map(obj => this.getNombreKeyObjeto2(obj) !== undefined ? obj[this.getNombreKeyObjeto2(obj)] : obj )
-    })
-    )
+      [this.getNombreKeyObjeto(objeto)]: Object.values(objeto)
+        .filter((obj) => obj[this.getNombreIdPorObjeto(obj)] === id)
+        .map((obj) =>
+          this.getNombreKeyObjeto2(obj) !== undefined
+            ? obj[this.getNombreKeyObjeto2(obj)]
+            : obj
+        ),
+    }));
     console.log('fn: ', listaIDs);
 
-    return listaIDs.map(id => ({
+    return listaIDs.map((id) => ({
       ...objs[id],
-      [this.getNombreKeyObjeto(objeto)]: Object
-      .values(objeto)
-      .filter(obj => obj[this.getNombreIdPorObjeto(obj)] === id)
-      .map(obj => this.getNombreKeyObjeto2(obj) !== undefined ? obj[this.getNombreKeyObjeto2(obj)] : obj )
-    })
-    )
+      [this.getNombreKeyObjeto(objeto)]: Object.values(objeto)
+        .filter((obj) => obj[this.getNombreIdPorObjeto(obj)] === id)
+        .map((obj) =>
+          this.getNombreKeyObjeto2(obj) !== undefined
+            ? obj[this.getNombreKeyObjeto2(obj)]
+            : obj
+        ),
+    }));
   }
 
   private getObjetoContenido(objeto: any): unknown {
-    return Object
-              .values(objeto)
-              .find(obj => typeof(obj) === 'object');
+    return Object.values(objeto).find((obj) => typeof obj === 'object');
   }
 
-  private getIdsNoRepetidosPorObjeto(objeto: any){
-    return Object
-    .entries(objeto)
-    .reduce((acc, [indice, obj]: any[]) => ({
-      ...acc,
-      [obj[this.getNombreIdPorObjeto(obj)]] : obj
-    }), {});
+  private getIdsNoRepetidosPorObjeto(objeto: any) {
+    return Object.entries(objeto).reduce(
+      (acc, [indice, obj]: any[]) => ({
+        ...acc,
+        [obj[this.getNombreIdPorObjeto(obj)]]: obj,
+      }),
+      {}
+    );
   }
 
   private getNombreIdPorObjeto(objeto: any): string {
-  return Object
-          .keys(objeto)
-          .find(key => key.slice(0, 3) === 'id_');
+    return Object.keys(objeto).find((key) => key.slice(0, 3) === 'id_');
   }
 
   private getNombreKeyObjeto(objeto: any): string {
-    return  Object
-              .entries(this.getObjetoContenido(objeto))
-              .find(arr => typeof(arr[1]) === 'object' ? arr[0] : null )[0];
+    return Object.entries(this.getObjetoContenido(objeto)).find((arr) =>
+      typeof arr[1] === 'object' ? arr[0] : null
+    )[0];
   }
 
   private getNombreKeyObjeto2(objeto: any): string {
-    return  Object
-              .keys(this.getObjetoContenido(objeto))
-              .find(key => typeof(objeto[key]) === 'object' ? key : null );
+    return Object.keys(this.getObjetoContenido(objeto)).find((key) =>
+      typeof objeto[key] === 'object' ? key : null
+    );
   }
 
   private getNombreKeyObjeto3(objeto: any): string {
@@ -176,21 +177,25 @@ export class ChecklistDatabase {
     );
   }
 
-  arreglarResumenPlan(resumenBack: any[]){
-
-    const listaIdsHallazgos = resumenBack.reduce((acc, el) => ({...acc, [el.id_HALLAZGO] : el}), {});
-    const listaCausas = Object.keys(listaIdsHallazgos)
-    .map(idHallazgo => ({
-        idHallazgo,
-        causas: resumenBack
-        .filter(item => item.id_HALLAZGO === +idHallazgo)
-        .map(item => item.causa)
-        .reduce((acc, el) => ({
-          ...acc,
-          [el.id_CAUSA]: el
-        }), {})
-        }))
-        // console.log('listaCausas', listaCausas);
+  arreglarResumenPlan(resumenBack: any[]) {
+    const listaIdsHallazgos = resumenBack.reduce(
+      (acc, el) => ({ ...acc, [el.id_HALLAZGO]: el }),
+      {}
+    );
+    const listaCausas = Object.keys(listaIdsHallazgos).map((idHallazgo) => ({
+      idHallazgo,
+      causas: resumenBack
+        .filter((item) => item.id_HALLAZGO === +idHallazgo)
+        .map((item) => item.causa)
+        .reduce(
+          (acc, el) => ({
+            ...acc,
+            [el.id_CAUSA]: el,
+          }),
+          {}
+        ),
+    }));
+    // console.log('listaCausas', listaCausas);
     // const listaHallazgos = this.fn(resumenBack);
     // const listaCausas1 = listaHallazgos.map(obj => ({...obj, causa: this.fn(obj.causa)}))
     // const listaCausar = listaCausas1.map(obj => (console.log('lis: ',this.fn(obj.causa))))
@@ -211,23 +216,24 @@ export class ChecklistDatabase {
       const value = obj[key];
       const node = new TodoItemNode();
       if (key === 'causa' || key === 'accion' || key === 'actividad') {
-        node.item = 'Lista de '+ key;
-      }else{
+        node.item = 'Lista de ' + key;
+      } else {
         node.item = key;
       }
 
       if (typeof value === 'object') {
         if (value.length !== 1) {
           node.children = this.buildFileTree(value, level + 1);
-        }else{
-          const esUnArray = Object.keys(value[0]).find((key) => key.slice(0, 3) === 'id_');
+        } else {
+          const esUnArray = Object.keys(value[0]).find(
+            (key) => key.slice(0, 3) === 'id_'
+          );
           if (value[0][esUnArray] !== 0) {
             node.children = this.buildFileTree(value, level + 1);
-          }else{
+          } else {
             node.item = null;
           }
         }
-
       } else {
         node.item = key.replace(/_/g, ' ').toLocaleUpperCase() + ': ' + value;
       }
@@ -284,6 +290,7 @@ export class VerPlanComponent implements OnInit {
   noHayDatosParaMostrar = false;
 
   esAuditor = false;
+  esLiderProceso = false;
 
   modoEdicionActivo: boolean;
   public objPlan: plan = new plan();
@@ -301,21 +308,7 @@ export class VerPlanComponent implements OnInit {
 
   public listadoEstado = estadosPlan;
 
-  columnas: Columna[] = [
-    { nombreCelda: 'nombreCreador', nombreCeldaHeader: 'Nombre del creador' },
-    { nombreCelda: 'nombrePlan', nombreCeldaHeader: 'Descripción' },
-    {
-      nombreCelda: 'fecha',
-      nombreCeldaHeader: 'Fecha',
-      tipo: TipoColumna.FECHA,
-    },
-    { nombreCelda: 'estado', nombreCeldaHeader: 'Estado' },
-    {
-      nombreCelda: 'acciones',
-      nombreCeldaHeader: 'Acciones',
-      tipo: TipoColumna.ACCIONES,
-    },
-  ];
+  columnas: Columna[] = [];
   estadoButtons: EstadoButtons = {
     crear: false,
     editar: true,
@@ -341,12 +334,52 @@ export class VerPlanComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.esLiderProceso =
+      this.authService.getUsuario().objRole[0] === 'ROLE_liderDeProceso';
+    // this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
     this.crearFormulario();
     this.cargarCatalogos();
     this.verificarEstadoComponente();
 
     this.inicializarArbol();
+    this.cargarNombreColumnas();
+  }
+
+  private cargarNombreColumnas() {
+    if (this.esLiderProceso) {
+      this.columnas = [
+        {
+          nombreCelda: 'nombreCreador',
+          nombreCeldaHeader: 'Nombre del creador',
+        },
+        { nombreCelda: 'nombrePlan', nombreCeldaHeader: 'Descripción' },
+        {
+          nombreCelda: 'fecha',
+          nombreCeldaHeader: 'Fecha',
+          tipo: TipoColumna.FECHA,
+        },
+        { nombreCelda: 'estado', nombreCeldaHeader: 'Estado' },
+      ];
+    } else {
+      this.columnas = [
+        {
+          nombreCelda: 'nombreCreador',
+          nombreCeldaHeader: 'Nombre del creador',
+        },
+        { nombreCelda: 'nombrePlan', nombreCeldaHeader: 'Descripción' },
+        {
+          nombreCelda: 'fecha',
+          nombreCeldaHeader: 'Fecha',
+          tipo: TipoColumna.FECHA,
+        },
+        { nombreCelda: 'estado', nombreCeldaHeader: 'Estado' },
+        {
+          nombreCelda: 'acciones',
+          nombreCeldaHeader: 'Acciones',
+          tipo: TipoColumna.ACCIONES,
+        },
+      ];
+    }
   }
 
   private cargarCatalogos(): void {
@@ -375,6 +408,7 @@ export class VerPlanComponent implements OnInit {
       estado: [null],
       fechaFin: [null],
       fechaInicio: [null],
+      fechaSuscripcion: [null],
       idPlanMejoramiento: [{ value: null, disabled: true }],
       listaHallazgos: [null],
       nombre: [null, Validators.required],
@@ -423,8 +457,25 @@ export class VerPlanComponent implements OnInit {
                 res.planMejoramiento.proceso.idProceso === proceso.idProceso
             )[0]
           );
-          this.formularioPlan.get('fechaInicio').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaInicio').value));
-          this.formularioPlan.get('fechaFin').setValue(cambiarTextoAFecha(this.formularioPlan.get('fechaFin').value));
+        this.formularioPlan
+          .get('fechaInicio')
+          .setValue(
+            cambiarTextoAFecha(this.formularioPlan.get('fechaInicio').value)
+          );
+        this.formularioPlan
+          .get('fechaFin')
+          .setValue(
+            cambiarTextoAFecha(this.formularioPlan.get('fechaFin').value)
+          );
+        if (this.formularioPlan.get('fechaSuscripcion').value) {
+          this.formularioPlan
+            .get('fechaSuscripcion')
+            .setValue(
+              cambiarTextoAFecha(
+                this.formularioPlan.get('fechaSuscripcion').value
+              )
+            );
+        }
       });
     this.observacionesService.getObservacionPorIdPlan(this.codeUrl).subscribe(
       (res) => {
@@ -533,7 +584,7 @@ export class VerPlanComponent implements OnInit {
     this._database.setCode(this.codeUrl);
     this._database.dataChange.subscribe((data) => {
       this.dataSource.data = data;
-      this.noHayDatosParaMostrar  = data.length === 0;
+      this.noHayDatosParaMostrar = data.length === 0;
     });
   }
 

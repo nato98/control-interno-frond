@@ -89,7 +89,7 @@
                         <!-- Tabla responsable -->
                         <div fxFlex="80%">
                             <unicauca-tabla-lider fxFill [inTituloTabla]="'Asignar responsable'" [inLider]="'Responsable'" [inColumnas]="columnas" [inStreamDatos$]="streamDatosAuditor$" [inActivarFiltroItems]="'true'" [inPlaceholderFiltroItems]="'Filtrar responsable'" [selectionLider]="selection"
-                                [validadorCheckRequerido]="validadorCheckAuditor" [validadorDisabledCheck]="mostrarBtnVolver" (outSeleccionarUnicaFila$)="onSeleccionarUnicaFilaLiderAuditor($event)"></unicauca-tabla-lider>
+                                [validadorCheckRequerido]="validadorCheckAuditor" [validadorDisabledCheck]="desactivarCheck" (outSeleccionarUnicaFila$)="onSeleccionarUnicaFilaLiderAuditor($event)"></unicauca-tabla-lider>
                         </div>
                         <!-- Botón de guardar -->
                         <div fxFlex="20%" fxLayoutAlign="center center">

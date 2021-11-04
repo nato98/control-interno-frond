@@ -114,8 +114,6 @@ export class IngresosUsuariosComponent implements OnInit {
 
   /**Metodos de busqueda  */
   private fechasincompletas(): boolean {
-    console.log(this.datofecha1, this.datofecha2);
-
     if (this.datofecha1 == '' || this.datofecha2 == '') {
       return true;
     }

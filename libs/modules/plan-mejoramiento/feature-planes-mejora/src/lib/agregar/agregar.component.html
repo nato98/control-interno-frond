@@ -41,7 +41,7 @@
                                     <div fxLayout="column" fxFlex="1 1 calc(50% - 20px)" fxLayoutGap="15px">
                                         <mat-form-field>
                                             <mat-label>Fecha inicio</mat-label>
-                                            <input matInput id="fechaInicio" placeholder="Fecha inicio" formControlName="fechaInicio" [matDatepicker]="fechaInicio" [min]="fechaActual" [max]="fechaMaxima" (dateChange)="
+                                            <input matInput id="fechaInicio" placeholder="Fecha inicio" formControlName="fechaInicio" [matDatepicker]="fechaInicio" [min]="esAdministrado ? null : fechaActual" [max]="fechaMaxima" (dateChange)="
                           verificarFechas($event.value);
                           validarAnoYMedioAPartirFechaActual()
                         " readonly />
@@ -55,6 +55,13 @@
                                             <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
                                             <mat-datepicker #fechaFin></mat-datepicker>
                                         </mat-form-field>
+
+                                        <mat-form-field>
+                                          <mat-label>Fecha suscripción</mat-label>
+                                          <input matInput id="fechaSuscripcion" placeholder="Fecha fin" formControlName="fechaSuscripcion" [matDatepicker]="fechaSuscripcion" [min]="objPlan.fechaInicio" readonly />
+                                          <mat-datepicker-toggle matSuffix [for]="fechaSuscripcion"></mat-datepicker-toggle>
+                                          <mat-datepicker #fechaSuscripcion></mat-datepicker>
+                                      </mat-form-field>
 
                                         <div *ngIf="modoEdicionActivo" fxLayout="row" fxLayoutGap="80px">
                                             <div fxLayoutGap="20px">
@@ -75,15 +82,15 @@
                                 <!-- Datos de los auditores y líderes de proceso -->
                                 <div fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column" fxLayoutGap="30px">
                                     <!-- Tabla líder proceso -->
-                                    <div fxFlex="1 1 calc(50% - 20px)">
+                                    <div fxFlex="1 1 calc(50% - 20px)" *ngIf="!esLiderProceso">
                                         <unicauca-tabla-lider [inTituloTabla]="'Asignar líder de proceso'" [inLider]="'Líder de proceso'" [inColumnas]="columnas" [inStreamDatos$]="streamDatosLiderProceso$" [inActivarFiltroItems]="'true'" [inPlaceholderFiltroItems]="'Filtrar líder de proceso'"
-                                            [selectionLider]="selectionLiderProceso" [validadorCheckRequerido]="validadorCheckLiderProceso" [validadorDisabledCheck]="mostrarBtnVolver" (outSeleccionarUnicaFila$)="onSeleccionarUnicaFilaLiderProceso($event)">
+                                            [selectionLider]="selectionLiderProceso" [validadorCheckRequerido]="validadorCheckLiderProceso" [validadorDisabledCheck]="esAuditor" (outSeleccionarUnicaFila$)="onSeleccionarUnicaFilaLiderProceso($event)">
                                         </unicauca-tabla-lider>
                                     </div>
                                     <!-- Tabla líder auditor -->
-                                    <div fxFlex="1 1 calc(50% - 20px)">
+                                    <div fxFlex="1 1 calc(50% - 20px)" *ngIf="!esAuditor">
                                         <unicauca-tabla-lider fxFill [inTituloTabla]="'Asignar líder auditor'" [inLider]="'Líder auditor'" [inColumnas]="columnas" [inStreamDatos$]="streamDatosAuditor$" [inActivarFiltroItems]="'true'" [inPlaceholderFiltroItems]="'Filtrar líder auditor'" [selectionLider]="selectionLiderAudior"
-                                            [validadorCheckRequerido]="validadorCheckAuditor" [validadorDisabledCheck]="mostrarBtnVolver" (outSeleccionarUnicaFila$)="onSeleccionarUnicaFilaLiderAuditor($event)"></unicauca-tabla-lider>
+                                            [validadorCheckRequerido]="validadorCheckAuditor" [validadorDisabledCheck]="esLiderProceso" (outSeleccionarUnicaFila$)="onSeleccionarUnicaFilaLiderAuditor($event)"></unicauca-tabla-lider>
                                     </div>
                                 </div>
                                 <!-- Botón guardar -->

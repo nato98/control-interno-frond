@@ -23,7 +23,7 @@
                         {{ column.nombreCeldaHeader }}
                     </th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element[column.nombreCelda] | date: 'medium' }}
+                        {{ element[column.nombreCelda] | date: 'yyyy-MM-dd h:mm a' }}
                     </td>
                 </div>
                 <div *ngIf="column.tipo === tipoColumna.FECHA_SIN_HORA">

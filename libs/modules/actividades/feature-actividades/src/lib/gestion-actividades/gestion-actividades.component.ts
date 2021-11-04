@@ -37,6 +37,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ActividadesService } from '@unicauca/modules/actividades/data-access';
+import { AuthService } from 'libs/auth/src/lib/data-access/auth/auth.service';
 
 @Component({
   selector: 'unicauca-gestion-actividades',
@@ -57,8 +58,10 @@ export class GestionActividadesComponent implements OnInit {
   fechaActual = new Date();
 
   mostrarBtnVolver = false;
+  desactivarCheck = false;
   modoEdicionActivo = false;
   esAuditor = false;
+  esLiderProceso = false;
 
   contador = 0;
 
@@ -110,14 +113,15 @@ export class GestionActividadesComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private causaService: CausaService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private accionesService: AccionesService,
-    private tipoControlService: TipoControlService,
     private actividadesService: ActividadesService
   ) {}
 
   ngOnInit(): void {
+    this.esAuditor = (this.authService.getUsuario().objRole[0] === 'ROLE_auditor');
+    this.esLiderProceso = (this.authService.getUsuario().objRole[0] === 'ROLE_liderDeProceso');
     this.crearFormulario();
     // this.tipoControlService.getTipoControl().subscribe((tipoControl: any) => {
     //   this.tipoControl = tipoControl.tipoControl;
@@ -125,6 +129,7 @@ export class GestionActividadesComponent implements OnInit {
     // });
     this.cargarDatosResponsable();
     this.verificarEstadoComponente();
+    this.colocarIneditablesCampos();
   }
 
   private cargarDatosResponsable(): void {
@@ -159,9 +164,6 @@ export class GestionActividadesComponent implements OnInit {
         switchMap((respuestaURL) => {
           this.idAccion = parseInt(respuestaURL.get('idAccion'));
           this.idActividad = parseInt(respuestaURL.get('idActividad'));
-          this.esAuditor = Boolean(respuestaURL.get('esAuditor'));
-          console.log(this.esAuditor);
-
           return this.accionesService.getAccionPorId(this.idAccion);
         })
       )
@@ -178,6 +180,24 @@ export class GestionActividadesComponent implements OnInit {
           this.modoEdicionActivo = false;
         }
       });
+  }
+
+  private colocarIneditablesCampos(){
+    if (this.esAuditor) {
+      this.formularioActividad.get('indicador').disable();
+      this.formularioActividad.get('tipo_unidad').disable();
+      this.formularioActividad.get('valor_unidad').disable();
+      this.formularioActividad.get('recurso').disable();
+      this.formularioActividad.get('periodicidad').disable();
+      this.formularioActividad.get('estado').disable();
+      this.formularioActividad.get('fechaEjecucion').disable();
+      this.formularioActividad.get('fechaTerminacion').disable();
+      this.formularioActividad.get('descripcionActividad').disable();
+      this.desactivarCheck = true;
+    }
+    if (this.esLiderProceso) {
+      this.formularioActividad.get('fechaSeguimiento').disable();
+    }
   }
 
   private crearFormulario(): void {
@@ -234,6 +254,7 @@ export class GestionActividadesComponent implements OnInit {
       });
     if (localStorage.getItem('visualizar') === 'true') {
       this.formularioActividad.disable();
+      this.desactivarCheck = true;
       this.mostrarBtnVolver = true;
       this.titulo = 'Ver actividad';
     }
@@ -258,7 +279,7 @@ export class GestionActividadesComponent implements OnInit {
 
     this.objResponsable.setValue(respon[0]);
     this.actividadesService
-      .editarActividad(this.formularioActividad.value, this.id_Actividad.value)
+      .editarActividad(this.formularioActividad.getRawValue(), this.id_Actividad.value)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((respuestaBack) => {
         Swal.fire({

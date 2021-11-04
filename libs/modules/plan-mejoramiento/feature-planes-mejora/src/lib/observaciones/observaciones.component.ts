@@ -34,6 +34,7 @@ export class ObservacionesComponent implements OnInit {
   public listadoEstado = estadosPlan;
 
   contador = 0;
+  esLiderProceso = false;
 
   unsubscribe$ = new Subject();
 
@@ -49,6 +50,7 @@ export class ObservacionesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.esLiderProceso = (this.authService.getUsuario().objRole[0] === 'ROLE_liderDeProceso');
     this.idUsuario = this.authService.getUsuario().id;
     this.crearFormulario();
     this.verificarEstadoComponente();

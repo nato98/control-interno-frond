@@ -13,6 +13,7 @@ export class plan {
   responsable: string;
   fechaInicio: string;
   fechaFin: string;
+  fechaSuscripcion: string;
   estado: string;
   codeURL: string;
   pathSoporte: string;

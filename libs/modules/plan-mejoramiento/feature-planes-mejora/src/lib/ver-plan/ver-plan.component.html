@@ -50,6 +50,13 @@
                                                 <mat-datepicker #fechaFin></mat-datepicker>
                                             </mat-form-field>
 
+                                            <mat-form-field>
+                                              <mat-label>Fecha suscripción</mat-label>
+                                              <input matInput id="fechaSuscripcion" placeholder="Fecha fin" formControlName="fechaSuscripcion" [matDatepicker]="fechaSuscripcion" [min]="objPlan.fechaInicio" readonly />
+                                              <mat-datepicker-toggle matSuffix [for]="fechaSuscripcion"></mat-datepicker-toggle>
+                                              <mat-datepicker #fechaSuscripcion></mat-datepicker>
+                                          </mat-form-field>
+
                                             <div *ngIf="modoEdicionActivo" fxLayout="row" fxLayoutGap="80px">
                                                 <div fxLayoutGap="20px">
                                                     <mat-label>Prorrogar</mat-label>
@@ -67,7 +74,7 @@
                                             <!-- Botón volver -->
                                             <div fxLayoutAlign="center center" fxLayoutGap="60px">
                                                 <div *ngIf="mostrarBtnVolver" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-                                                    <button *ngIf="!esAuditor" mat-raised-button color="primary" type="button" style="float: right" (click)="editarDatos()"> Editar </button>
+                                                    <button mat-raised-button color="primary" type="button" style="float: right" (click)="editarDatos()"> Editar </button>
                                                     <button mat-raised-button color="warn" type="button" style="float: right" (click)="listar()"> Volver </button>
                                                 </div>
                                             </div>
@@ -97,7 +104,7 @@
 
                                 <!-- Observaciones -->
                                 <div class="bordes-curvos padding">
-                                    <div fxLayoutAlign="end center" fxLayoutGap="20px">
+                                    <div *ngIf="!this.esLiderProceso" fxLayoutAlign="end center" fxLayoutGap="20px">
                                         <button mat-raised-button color="primary" (click)="abrir()">
                                           Agregar observación
                                         </button>
