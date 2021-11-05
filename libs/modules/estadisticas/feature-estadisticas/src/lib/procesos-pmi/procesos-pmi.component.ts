@@ -23,9 +23,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./procesos-pmi.component.scss'],
 })
 export class ProcesosPmiComponent implements OnInit {
+
+  titulo = 'Todos los procesos';
+
   streamDatos$ = new BehaviorSubject<any[]>([]);
   procesos: Proceso[];
-  titulo = 'Procesos';
+
   columnas: Columna[] = [
     { nombreCelda: 'idProceso', nombreCeldaHeader: 'Identificador' },
     { nombreCelda: 'nombreProceso', nombreCeldaHeader: 'Nombre Proceso' },
@@ -45,13 +48,15 @@ export class ProcesosPmiComponent implements OnInit {
   };
 
   /*Plan de Mejora Institucional*/
-  quantities = [];
-  titleActividades = "Actividades";
-  numActividades = 0;
-  numHallazgos = 0;
-  numAcciones = 0;
-  numPlanes = 0;
+  cantidades = {
+    planes: {titulo: "Planes de Mejora", valor: "0"},
+    hallazgos: {titulo: "Hallazgos", valor: "0"},
+    acciones: {titulo: "Acciones", valor: "0"},
+    actividades: {titulo: "Actividades", valor: "0"}
+  };
+
   /**PIE CHART */
+  tituloLegend: string = "Estado Actividades";
   activities = [];
   data = [
     {
@@ -87,7 +92,7 @@ export class ProcesosPmiComponent implements OnInit {
     this.getNoHallazgos();
     this.getNoAcciones();
     this.getActividades();
-
+    this.buildLabels();
   }
 
   getTodosProcesos(): void {
@@ -102,54 +107,46 @@ export class ProcesosPmiComponent implements OnInit {
     );
   }
 
-  getNoHallazgos(): void {
-    this.hallazgoService.getTodosHallazgos().subscribe((response) => {
-      this.numHallazgos = response.hallazgo.length;
-      this.quantities.push({
-        quantity: response.hallazgo.length,
-        title: 'Hallazgos',
-      });
+  getNoPlanes(): void {
+    this.planService.getPlanes().subscribe((response: any) => {
+      this.cantidades['planes'].valor = response.planes.length.toString();
     });
   }
 
-  getNoPlanes(): void {
-    this.planService.getPlanes().subscribe((response: any) => {
-      this.numPlanes = response.planes.length;
-      this.quantities.push({
-        quantity: response.planes.length,
-        title: 'Planes',
-      });
+  getNoHallazgos(): void {
+    this.hallazgoService.getTodosHallazgos().subscribe((response) => {
+      this.cantidades['hallazgos'].valor = response.hallazgo.length.toString();
+    });
+  }
+
+  getNoAcciones(): void {
+    this.accionesService.getAcciones().subscribe((response: any) => {
+      this.cantidades['acciones'].valor = response.acciones.length.toString();
     });
   }
 
   getActividades(): void {
     this.actividadesService.getActividades().subscribe((response: any) => {
       this.activities = response.activades;
-      this.numActividades = response.actividades.length;
-      /*this.quantities.push({
-        quantity: this.activities.length,
-        title: 'Actividades',
-      });*/
+      this.cantidades['actividades'].valor = response.actividades.length.toString();
     });
   }
 
-  getNoAcciones(): void {
-    this.accionesService.getAcciones().subscribe((response: any) => {
-      this.numAcciones = response.acciones.length;
-      this.quantities.push({
-        quantity: response.acciones.length,
-        title: 'Acciones',
-      });
+  buildLabels(): void{
+    let total = 0;
+    this.data.forEach((item)=>{
+      total += item.value;
     });
-  }
-
-  buildDataActivities(): void{
-
+    for (let index = 0; index < this.data.length; index++) {
+      let percent = Math.round((this.data[index].value * 100) / total);
+      this.data[index].name = this.data[index].name + ": " + percent.toString() + "%";
+    }
   }
 
   onVerDetalles(procesoSeleccionado): void {
     this.router.navigate([
       `home/estadisticas/all/proceso/${procesoSeleccionado.idProceso}`,
     ]);
+    localStorage.setItem("proceso", procesoSeleccionado.nombreProceso);
   }
 }

@@ -7,6 +7,7 @@ import { FechaLocalPipe } from './fecha-local.pipe';
 import { WithLoadingPipe } from './with-loading.pipe';
 import { FiltroFechasPipe } from './filtro-fechas.pipe';
 import { LiderProcesoPipe } from './lider-proceso.pipe';
+import { ObjectToArrayPipe } from './object-to-array.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { LiderProcesoPipe } from './lider-proceso.pipe';
     WithLoadingPipe,
     FiltroFechasPipe,
     LiderProcesoPipe,
+    ObjectToArrayPipe,
   ],
   imports: [CommonModule],
   exports: [
@@ -25,6 +27,7 @@ import { LiderProcesoPipe } from './lider-proceso.pipe';
     WithLoadingPipe,
     FiltroFechasPipe,
     LiderProcesoPipe,
+    ObjectToArrayPipe
   ],
 })
 export class SharedPipesModule {}

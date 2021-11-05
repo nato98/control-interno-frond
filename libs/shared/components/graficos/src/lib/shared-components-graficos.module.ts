@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { MatCardModule } from '@angular/material/card';
-import { PieGridComponent } from './pie-grid/pie-grid.component';
+import { PorcentajeGraficoComponent } from './porcentaje-grafico/porcentaje-grafico.component';
+import { PastelGraficoComponent } from './pastel-grafico/pastel-grafico.component';
+import { CirculoGraficoComponent } from './circulo-grafico/circulo-grafico.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import { PieGridComponent } from './pie-grid/pie-grid.component';
     NgxChartsModule,
     MatCardModule
   ],
-  declarations: [PieChartComponent, PieGridComponent],
-  exports: [PieChartComponent, PieGridComponent]
+  declarations: [PorcentajeGraficoComponent, PastelGraficoComponent, CirculoGraficoComponent],
+  exports: [PorcentajeGraficoComponent, PastelGraficoComponent, CirculoGraficoComponent]
 })
 export class SharedComponentsGraficosModule {}

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
 
-
 import {
   Columna,
   EstadoButtons,
@@ -24,15 +23,16 @@ import { ActividadesService } from '@unicauca/modules/actividades/data-access';
   styleUrls: ['./proceso-individual.component.scss'],
 })
 export class ProcesoIndividualComponent implements OnInit {
-
-  streamDatos$ = new BehaviorSubject<any[]>([]);
-  planes: plan[];
   titulo = 'Planes de Mejoramiento';
   idProceso: number;
+  nombreProceso: string;
+  planes: plan[];
+
+  /*INFORMACIÓN TABLA*/
+  streamDatos$ = new BehaviorSubject<any[]>([]);
 
   columnas: Columna[] = [
-    { nombreCelda: 'idPlanMejoramiento',
-      nombreCeldaHeader: 'Identificador' },
+    { nombreCelda: 'idPlanMejoramiento', nombreCeldaHeader: 'Identificador' },
     {
       nombreCelda: 'nombre',
       nombreCeldaHeader: 'Nombre Plan de Mejora',
@@ -53,58 +53,92 @@ export class ProcesoIndividualComponent implements OnInit {
   };
 
   /*INFORMACION DEL PROCESO*/
-  titleHallazgos: String = "Hallazgos";
-  titlePlanes: String = "Planes";
-  titleAcciones: String = "Actividades";
-  titleActividades: String = "Acciones";
-  noHallazgos: String;
-  noActividades: String;
-  noAcciones: String;
-  noPlanes: String;
+  cantidades = {
+    planes: { titulo: 'Planes de Mejora', valor: '0' },
+    hallazgos: { titulo: 'Hallazgos', valor: '0' },
+    acciones: { titulo: 'Acciones', valor: '0' },
+    actividades: { titulo: 'Actividades', valor: '0' },
+  };
 
-  /**PIE-CHART ACTIVIDADES */
-  dataActividades = [
+  /**PIE-CHART ESTADO ACTIVIDADES */
+  dataEstadoActividades = [
     {
-      "name": "Incumplidas",
-      "value": 3
+      name: 'Incumplidas',
+      value: 3,
     },
     {
-      "name": "Ejecutadas",
-      "value": 5
+      name: 'Ejecutadas',
+      value: 5,
     },
     {
-      "name": "Activas",
-      "value": 7
+      name: 'Activas',
+      value: 7,
     },
-      {
-      "name": "Por vencerse",
-      "value": 6
-    }
+    {
+      name: 'Por vencerse',
+      value: 6,
+    },
+  ];
+
+  /**PIE-CHART AVANCE ACTIVIDADES */
+  dataAvanceActividades = [
+    {
+      name: '(0-19%) Crítico',
+      value: 5,
+    },
+    {
+      name: '(20-49%) Inaceptable',
+      value: 3,
+    },
+    {
+      name: '(50-89%) Aceptable',
+      value: 7,
+    },
+    {
+      name: '(90-100%) Satisfac.',
+      value: 9,
+    },
   ];
 
   /*PIE-CHART PLANES*/
   dataPlanes = [
     {
-      "name": "Formulación",
-      "value": 3
+      name: 'Formulación',
+      value: 3,
     },
     {
-      "name": "Ejecución",
-      "value": 5
+      name: 'Ejecución',
+      value: 5,
     },
     {
-      "name": "Finalizado",
-      "value": 7
+      name: 'Finalizado',
+      value: 7,
     },
     {
-      "name": "Revisión",
-      "value": 6
+      name: 'Revisión',
+      value: 6,
     },
     {
-      "name": "Suscripción",
-      "value": 6
-    }
+      name: 'Suscripción',
+      value: 6,
+    },
+
   ];
+
+  datosGrafico = {
+    planes: {
+      titulo: "Estado Planes de Mejora",
+      datos: this.dataPlanes
+    },
+    estadoActividades: {
+      titulo: "Estado Actividades",
+      datos: this.dataEstadoActividades
+    },
+    avanceActividades: {
+      titulo: "Estado Actividades",
+      datos: this.dataAvanceActividades
+    }
+  }
 
   constructor(
     private router: Router,
@@ -120,6 +154,9 @@ export class ProcesoIndividualComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.idProceso = params.idProceso;
     });
+    this.nombreProceso = localStorage.getItem('proceso');
+
+    //Get data from database
     this.getTodosPlanes();
     this.getHallazgosPorProceso();
     this.getAccionesPorProceso();
@@ -131,7 +168,7 @@ export class ProcesoIndividualComponent implements OnInit {
       .getPlanesPorProceso(this.idProceso)
       .subscribe((response) => {
         this.planes = response.planes;
-        this.noPlanes = this.planes.length.toString();
+        this.cantidades['planes'].valor = this.planes.length.toString();
         this.streamDatos$.next(this.planes);
       });
   }
@@ -140,15 +177,17 @@ export class ProcesoIndividualComponent implements OnInit {
     this.hallazgoService
       .getHallazgosProceso(this.idProceso)
       .subscribe((response) => {
-        this.noHallazgos = response.hallazgo.length;
+        this.cantidades[
+          'hallazgos'
+        ].valor = response.hallazgo.length.toString();
       });
   }
 
   public getAccionesPorProceso(): void {
     this.accionesService
-      .getAccionesPorProceso(this.idProceso)
+      .countAccionesPorProceso(this.idProceso)
       .subscribe((response) => {
-        this.noAcciones = response.acciones;
+        this.cantidades['acciones'].valor = response.acciones.length.toString();
       });
   }
 
@@ -156,7 +195,9 @@ export class ProcesoIndividualComponent implements OnInit {
     this.actividadesService
       .getActividadesPorProceso(this.idProceso)
       .subscribe((response) => {
-        this.noActividades = response.actividades.length;
+        this.cantidades[
+          'actividades'
+        ].valor = response.actividades.length.toString();
       });
   }
 
@@ -164,10 +205,10 @@ export class ProcesoIndividualComponent implements OnInit {
     const planVer: plan[] = this.planes.filter(
       (plan) => plan.idPlanMejoramiento === planSeleccionado.idPlanMejoramiento
     );
-    let _idPlan = planVer[0].idPlanMejoramiento.replace('/','%');
-    console.log(_idPlan);
-    this.router.navigate([
-      `home/estadisticas/all/plan-mejora/${_idPlan}`,
-    ]);
+
+    let idPlan = planVer[0].idPlanMejoramiento.replace('/', '%');
+    this.router.navigate([`home/estadisticas/all/plan-mejora/${idPlan}`]);
+
+    localStorage.setItem('nombrePlan', planVer[0].nombre);
   }
 }

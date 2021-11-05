@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PieGridComponent } from './pie-grid.component';
+import { PorcentajeGraficoComponent } from './porcentaje-grafico.component';
 
-describe('PieGridComponent', () => {
-  let component: PieGridComponent;
-  let fixture: ComponentFixture<PieGridComponent>;
+describe('PorcentajeGraficoComponent', () => {
+  let component: PorcentajeGraficoComponent;
+  let fixture: ComponentFixture<PorcentajeGraficoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PieGridComponent ]
+      declarations: [ PorcentajeGraficoComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PieGridComponent);
+    fixture = TestBed.createComponent(PorcentajeGraficoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

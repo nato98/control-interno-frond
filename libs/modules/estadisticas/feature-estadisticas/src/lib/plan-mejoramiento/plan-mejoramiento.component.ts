@@ -21,6 +21,14 @@ export class PlanMejoramientoComponent implements OnInit {
   idPlan: string;
   actividades: [];
 
+  avance: number = 95;
+  cumplimiento: number = 50;
+  titleAvance: string = "Porcentaje de Avance";
+  titleCumplimiento: string = "Porcentaje de Cumplimiento";
+
+  noAcciones: number = 2;
+  titleAcciones: string = "Acciones";
+
   columnas: Columna[] = [
     { nombreCelda: 'idActividad', nombreCeldaHeader: 'Identificador' },
     {
@@ -41,6 +49,57 @@ export class PlanMejoramientoComponent implements OnInit {
     upload: false,
     visualizar: true,
   };
+
+  /**PIE-CHART ESTADO ACTIVIDADES */
+  dataEstadoActividades = [
+    {
+      name: 'Incumplidas',
+      value: 3,
+    },
+    {
+      name: 'Ejecutadas',
+      value: 5,
+    },
+    {
+      name: 'Activas',
+      value: 7,
+    },
+    {
+      name: 'Por vencerse',
+      value: 6,
+    },
+  ];
+
+  /**PIE-CHART AVANCE ACTIVIDADES */
+  dataAvanceActividades = [
+    {
+      name: '(0-19%) Crítico',
+      value: 5,
+    },
+    {
+      name: '(20-49%) Inaceptable',
+      value: 3,
+    },
+    {
+      name: '(50-89%) Aceptable',
+      value: 7,
+    },
+    {
+      name: '(90-100%) Satisfac.',
+      value: 9,
+    },
+  ];
+
+  datosGrafico = {
+    estadoActividades: {
+      titulo: "Estado Actividades",
+      datos: this.dataEstadoActividades
+    },
+    avanceActividades: {
+      titulo: "Avance Actividades",
+      datos: this.dataAvanceActividades
+    }
+  }
 
   constructor(
     private actividadesService: ActividadesService,

@@ -10,11 +10,35 @@
           (outVisualizar$)="onVerDetalles($event)"
         >
         </unicauca-tabla>
+        <!--Detalles del plan de mejoramiento-->
+        <div class="container-cards">
+          <unicauca-porcentaje-grafico
+            [porcentaje]="avance"
+            [titulo]="titleAvance"
+          >
+          </unicauca-porcentaje-grafico>
+          <unicauca-circulo-grafico
+            [texto]="noAcciones"
+            [titulo]="titleAcciones">
+          </unicauca-circulo-grafico>
+          <unicauca-porcentaje-grafico
+            [porcentaje]="cumplimiento"
+            [titulo]="titleCumplimiento"
+          >
+          </unicauca-porcentaje-grafico>
+        </div>
+
+        <!--Gráficos-->
+        <div class="pie-container">
+          <div *ngFor="let detalle of datosGrafico | objectToArray">
+            <unicauca-pastel-grafico
+              [legendTitle]="detalle.titulo"
+              [information]="detalle.datos"
+            ></unicauca-pastel-grafico>
+          </div>
+        </div>
+        <br>
       </div>
     </div>
   </section>
-</div>
-
-<div>
-  <unicauca-pie-grid></unicauca-pie-grid>
 </div>

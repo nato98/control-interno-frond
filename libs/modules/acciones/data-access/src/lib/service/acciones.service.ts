@@ -29,9 +29,7 @@ export class AccionesService {
   public editarAccion(accion: Accion, idAccion: number): Observable<any>{
     return this.http.put<any>(this.urlEndPoint+`acciones/${idAccion}`, accion);
   }
-  public getAccionesPorProceso(idProceso: number): Observable<any>{
-    return this.http.get<any>(this.urlEndPoint+`acciones-proceso/${idProceso}`);
+  public countAccionesPorProceso(idProceso: number): Observable<any>{
+    return this.http.get<any>(this.urlEndPoint+`count-acciones-proceso/${idProceso}`);
   }
-
-
 }

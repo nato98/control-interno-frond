@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 
+import { MatButtonModule } from '@angular/material/button';
+
 import { ModulesEstadisticasDataAccessModule } from '@unicauca/modules/estadisticas/data-access';
 import { SharedComponentsTablaModule } from '@unicauca/shared/components/tabla';
-import { SharedComponentsCirculoModule } from '@unicauca/shared/components/circulo';
 import { SharedComponentsGraficosModule } from '@unicauca/shared/components/graficos';
+
 
 import {
   PlanService,
@@ -20,6 +22,7 @@ import { ProcesosPmiComponent } from './procesos-pmi/procesos-pmi.component';
 import { PlanMejoramientoComponent } from './plan-mejoramiento/plan-mejoramiento.component';
 import { ControlPmComponent } from './control-pm/control-pm.component';
 import { ProcesoIndividualComponent } from './proceso-individual/proceso-individual.component';
+import { SharedPipesModule } from '@unicauca/shared/pipes';
 
 const routes: Routes = [
   {
@@ -40,9 +43,11 @@ const routes: Routes = [
   imports: [
     CommonModule,
 
+    MatButtonModule,
+
     SharedComponentsTablaModule,
-    SharedComponentsCirculoModule,
     SharedComponentsGraficosModule,
+    SharedPipesModule,
 
     ModulesEstadisticasDataAccessModule,
 

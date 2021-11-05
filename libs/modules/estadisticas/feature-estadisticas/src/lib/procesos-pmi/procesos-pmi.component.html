@@ -1,10 +1,11 @@
-<!--PROCESOS-->
+<!--LISTADO DE PROCESOS-->
 <br />
 <div class="row">
   <section class="col">
     <div fxFill fxLayout="column" fxLayoutGap="20px" class="paddingx">
       <div fxFill class="paddingx">
         <unicauca-tabla
+          style="text-align: center"
           [inTituloTabla]="titulo"
           [inColumnas]="columnas"
           [inStreamDatos$]="streamDatos$"
@@ -18,53 +19,35 @@
 </div>
 
 <!--PLAN DE MEJORA INSTITUCIONAL-->
-
 <div class="card-margin">
   <div class="fxFill" class="paddingx">
-    <div class="paddingx">
-      <div fxLayout="row" fxLayoutAlign="space-around center">
-        <br />
-        <h2>Plan de Mejora Institucional</h2>
-        <unicauca-circulo
-          [text]="numPlanes"
-          [title]="'Planes de Mejora'"
-        ></unicauca-circulo>
-        <unicauca-circulo
-          [text]="numHallazgos"
-          [title]="'Hallazgos'"
-        ></unicauca-circulo>
-        <unicauca-circulo
-          [text]="numAcciones"
-          [title]="'Acciones'"
-        ></unicauca-circulo>
-        <unicauca-circulo
-          [text]="numActividades"
-          [title]="'Actividades'"
-        ></unicauca-circulo>
-
-
-        <!--<div *ngFor="let detail of quantities">
-          <unicauca-circulo
-          [text]="detail.quantity"
-          [title]="detail.title"
-        ></unicauca-circulo>
-        </div>-->
+    <div class="paddingx" style="text-align: center">
+      <br />
+      <h2>Plan de Mejora Institucional</h2>
+      <div
+        class="container-cards"
+        fxLayout="row"
+        fxLayoutAlign="space-around center"
+      >
+        <div *ngFor="let elemento of cantidades | objectToArray">
+          <unicauca-circulo-grafico
+            [titulo]="elemento.titulo"
+            [texto]="elemento.valor"
+          >
+          </unicauca-circulo-grafico>
+        </div>
       </div>
-      <div class="position">
-        <unicauca-pie-chart
-          [legendTitle]="titleActividades"
-          [single]="data"
-        ></unicauca-pie-chart>
+      <div>
+        <unicauca-pastel-grafico
+          [legendTitle]="tituloLegend"
+          [information]="data"
+        ></unicauca-pastel-grafico>
       </div>
     </div>
   </div>
 </div>
 
-<!--<unicauca-circulo [text] = "20">
-</unicauca-circulo>-->
-<!--<h2>Plan de Mejora Institucional</h2>
-
-
-<div fxLayoutAlign="end center">
+<!--BOTÓN GENERAR REPORTE-->
+<div class="paddingx" fxLayoutAlign="end center">
   <button mat-raised-button color="primary">Generar Reporte</button>
-</div>-->
+</div>
